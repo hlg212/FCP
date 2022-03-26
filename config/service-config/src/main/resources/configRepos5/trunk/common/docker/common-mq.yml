@@ -1,0 +1,7 @@
+spring:
+  rabbitmq:
+    #mq地址、端口、用户名、密码
+    host: 192.168.0.81
+    port: 5670
+    username: admin
+    password: admin

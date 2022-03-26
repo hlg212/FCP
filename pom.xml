@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>parent</artifactId>
+        <groupId>io.github.hlg212</groupId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+    <groupId>io.github.hlg212.fcp</groupId>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>fcp</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <!-- 说明是否作为一个打包成一个可运行包 -->
+        <spring-boot-maven-plugin.skip>false</spring-boot-maven-plugin.skip>
+
+        <!-- 框架版本，下级项目自行覆盖 -->
+        <fcf.version>0.2.0-SNAPSHOT</fcf.version>
+
+        <flatten.flattenMode>bom</flatten.flattenMode>
+        <flatten.pomElements.properties>keep</flatten.pomElements.properties>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.hlg212.fcf</groupId>
+            <artifactId>fcf-starter</artifactId>
+            <version>${fcf.version}</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.hlg212.fcf</groupId>
+                <artifactId>fcf-dependencies</artifactId>
+                <version>${fcf.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>

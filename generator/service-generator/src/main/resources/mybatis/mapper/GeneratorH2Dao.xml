@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.hlg212.generator.dao.GeneratorH2Dao">
+
+    <select id="getTableList" resultType="io.github.hlg212.generator.model.bo.Table">
+      select t.table_name name, t.remarks comments
+         FROM INFORMATION_SCHEMA.TABLES t
+        where t.table_TYPE = 'TABLE'
+         and t.table_name != 'DATABASECHANGELOG' and t.table_name != 'DATABASECHANGELOGLOCK'
+
+        <if test="tables != null">
+          and t.table_name in
+          <foreach collection="tables" item="name" index="index" open="(" close=")" separator=",">#{name}</foreach>
+        </if>
+
+    </select>
+
+    <select id="getColList" resultType="io.github.hlg212.generator.model.bo.Col">
+        select
+        table_name tableName,
+        column_name name,
+        type_name dataType,
+        remarks columnComment,
+        -- column_key columnKey,
+        numeric_precision as precision,
+        numeric_scale scale,
+        remarks comments
+        from information_schema.columns
+        where 1=1
+        <if test="tableName != null and tableName != ''">
+            and table_name = #{tableName}
+        </if>
+        order by ordinal_position;
+
+    </select>
+
+
+</mapper>

@@ -1,0 +1,11 @@
+htcf:
+  application:
+    generator:
+      port: 8181
+     
+server:
+  #端口
+  port: ${htcf.application.${spring.application.name}.port:8080}
+  servlet:
+    #上下文
+    contextPath: /${spring.application.name}

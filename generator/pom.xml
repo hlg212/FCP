@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fcp</artifactId>
+        <groupId>io.github.hlg212.fcp</groupId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <version>${revision}</version>
+    <artifactId>generator</artifactId>
+    <groupId>io.github.hlg212.fcp.generator</groupId>
+    <packaging>pom</packaging>
+    <description>平台-代码生成</description>
+    <properties>
+        <!-- 后期开启,前期 框架、平台 版本一致的情况使用上级定义的版本
+        <htcf-frame.version>2.0.0-SNAPSHOT</htcf-frame.version>
+        -->
+        <revision>0.1.0-SNAPSHOT</revision>
+        <flatten.pomElements.properties>resolve</flatten.pomElements.properties>
+
+    </properties>
+    <modules>
+        <module>facade-generator</module>
+        <module>service-generator</module>
+        <module>starter-generator</module>
+    </modules>
+
+
+</project>

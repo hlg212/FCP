@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>generator</artifactId>
+        <groupId>io.github.hlg212.fcp.generator</groupId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>service-generator</artifactId>
+
+    <properties>
+        <!-- 扁平化pom文件 (参数被替换) -->
+        <flatten.updatePomFile>true</flatten.updatePomFile>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>io.github.hlg212.fcp.generator</groupId>
+            <artifactId>facade-generator</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>io.github.dengliming.redismodule</groupId>-->
+<!--            <artifactId>all</artifactId>-->
+<!--            <version>1.0.4</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+        </dependency>
+
+    </dependencies>
+
+
+   
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <htcf.config.uri>http://192.168.0.70:8081/config/svn</htcf.config.uri>
+            </properties>
+        </profile>
+    </profiles>
+</project>

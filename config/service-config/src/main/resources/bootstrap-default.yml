@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: config
+  autoconfigure:
+    exclude:
+    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  profiles:
+    active:
+    - composite
+  cloud:
+    config:
+      enabled: true
+      server:
+        prefix: /svn
+        bootstrap: true
+        composite:
+        - type: native
+          #search-locations: file:///F:/nsvn/code/configRepos/{label}/{application}/${htcf.profile:docker}
+          search-locations:
+            - ${fcf.config.repos:classpath:configRepos5}/{label}/{application}/${fcf.profile:docker}
+            - ${fcf.config.repos:./configTest}/{label}/{application}/${fcf.profile:docker}
+          add-label-locations: false
+          fail-on-error: true

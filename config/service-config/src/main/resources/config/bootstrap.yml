@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: true
+encrypt:
+  key: 123
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: ${project.description}
+    version: ${project.version}
+    encoding: ${project.build.sourceEncoding}
+    java:
+      version: ${java.version}
+    frame:
+      version: ${fcf.version}
+
+---
+---
+## mq 关闭
+# 因为没有部署mq,所以先将功能关闭，否则启动时间比较长
+spring:
+  cloud:
+    bus:
+      enabled: false
+fcf:
+  esb:
+    enable: false
+## mq 关闭

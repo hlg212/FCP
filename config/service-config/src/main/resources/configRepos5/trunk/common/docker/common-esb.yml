@@ -1,0 +1,72 @@
+fcf:
+  #instanceId: ${spring.cloud.client.ip-address}:${server.port}
+  instanceId: ${HOSTNAME:${spring.cloud.client.ip-address}}:${server.port}
+  serviceId: ${spring.application.name}.(${fcf.instanceId})
+  esb:
+    destination: eventServiceBus
+    
+spring:
+  cloud:
+    bus:
+      destination: springCloudEventBus
+      id: ${fcf.serviceId}
+    stream:
+      rabbit:
+        bindings:
+          eventServiceBusOutput:
+            producer:
+              #routingKeyExpression: '''${spring.application.name}.(${htcf.instanceId})'''
+              routingKeyExpression: headers[routeKey]
+          springCloudBusInput:
+            consumer:
+              ttl: 600000
+              expires: 3600000
+          eventServiceBusFrameInput:
+            consumer:
+              ttl: 600000
+              expires: 3600000
+          eventServiceBusCacheInput:
+            consumer:
+              ttl: 600000
+              expires: 3600000
+              prefetch: 100
+              bindingRoutingKey: '#.${spring.application.name}.#'
+
+      bindings:
+        springCloudBusInput:
+          binder: springCloudEventBus
+          group: queue.${spring.application.name}
+
+        springCloudBusOutput:
+          binder: springCloudEventBus
+
+        eventServiceBusFrameInput:
+          binder: eventServiceBus
+          destination: ${htcf.esb.destination}.frame
+          group: ${spring.application.name}.(${fcf.instanceId})
+
+        eventServiceBusCacheInput:
+          binder: eventServiceBus
+          destination: ${htcf.esb.destination}.cache
+          group: ${spring.application.name}.(${fcf.instanceId})
+          
+        eventServiceBusOutput:
+          binder: eventServiceBus
+          destination: ${fcf.esb.destination}
+
+      binders:
+        springCloudEventBus:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                virtual-host: esb
+        eventServiceBus:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                virtual-host: esb
+        default:
+          type: rabbit
+      default-binder: default

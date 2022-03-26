@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>config</artifactId>
+        <groupId>io.github.hlg212.config</groupId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>service-config</artifactId>
+    <properties>
+        <flatten.updatePomFile>true</flatten.updatePomFile>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.tmatesoft.svnkit</groupId>
+            <artifactId>svnkit</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+           <activation>
+               <activeByDefault>true</activeByDefault>
+           </activation>
+            <properties>
+                <htcf.svn.uri>http://47.97.82.253:8443/svn/CFFZ/code/product/1801_jichupingtai/configRepos</htcf.svn.uri>
+                <htcf.svn.username>huanglg</htcf.svn.username>
+                <htcf.svn.password>110110</htcf.svn.password>
+                <htcf.config.uri>http://localhost:8081/config/svn</htcf.config.uri>
+                <htcf.profile>docker</htcf.profile>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <!--<profiles>-->
+        <!--<profile>-->
+        <!--<id>tw</id>-->
+
+            <!--<dependencies>-->
+
+                <!--<dependency>-->
+                    <!--<groupId>org.springframework.cloud</groupId>-->
+                    <!--<artifactId>spring-cloud-config-server</artifactId>-->
+                    <!--<exclusions>-->
+                        <!--<exclusion>-->
+                            <!--<groupId>org.springframework.boot</groupId>-->
+                            <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+                        <!--</exclusion>-->
+                    <!--</exclusions>-->
+                <!--</dependency>-->
+            <!--</dependencies>-->
+        <!--</profile>-->
+    <!--</profiles>-->
+</project>

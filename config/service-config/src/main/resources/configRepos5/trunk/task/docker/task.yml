@@ -1,0 +1,22 @@
+zxqid: 2
+handler: taskJob
+
+xxl:
+  job:
+    admin:
+      addresses: http://192.168.0.35:32080/xxl-job-admin
+    executor:
+      appname: psv-xxl-job-executor-task
+      ip: 192.168.11.169
+      port: 9997
+      logpath: /data/applogs/xxl-job/jobhandler/
+      logretentiondays: -1
+    accessToken:
+ribbon:
+  #请求处理的超时时间
+  ReadTimeout: 60000   
+
+#htcf:
+#  feign:
+#    xxl:
+#      url: http://192.168.0.70:8080/xxl-job-admin

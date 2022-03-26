@@ -1,0 +1,33 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/psv/eureka/
+    # 是否注册自身到eureka服务器
+    registerWithEureka: true
+    # 是否从eureka服务器获取注册信息
+    fetchRegistry: true
+    #拉取注册信息间隔
+    registryFetchIntervalSeconds: 10
+    #healthcheck:
+    #开启健康检查
+    #  enabled: true
+  instance:
+    # 将IP注册到Eureka Server上，而如果不配置就是机器的主机名
+    preferIpAddress: true
+    #显示服务名
+    instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}
+    #跳转swagger-ui.html
+    status-page-url: http://${spring.cloud.client.ip-address}:${server.port}${server.servlet.contextPath:}/swagger-ui.html
+    home-page-url-path: ${server.servlet.contextPath:}
+
+    # 最后一次心跳间隔，超过该时间将移除节点
+    lease-expiration-duration-in-seconds: 30
+    #心跳间隔
+    lease-renewal-interval-in-seconds: 10
+
+    # 配置上下文后需配置
+    metadata-map:
+      configPath: ${server.servlet.contextPath:/}
+      management:
+        context-path: ${server.servlet.contextPath:}/actuator
+      startup: ${random.int}

@@ -1,0 +1,15 @@
+security:
+  oauth2:
+    client:
+      # 客户端信息
+      clientId: fcfp
+      clientSecret: fcfp
+      accessTokenUri: ${fcf.accessTokenUri:http://localhost:8084/cas/oauth/token}
+      userAuthorizationUri:  ${fcf.userAuthorizationUri:http://localhost:8084/cas/oauth/authorize}
+    resource:
+      # 用户信息 url
+      userInfoUri:  ${fcf.userInfoUri:http://localhost:8084/cas/userinfo}
+      #preferTokenInfo: false
+    authorization:
+      check-token-access: ${fcf.checkTokenAccess:http://localhost:8084/cas/oauth/check_token}
+

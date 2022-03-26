@@ -1,0 +1,47 @@
+spring:
+  session:
+    store-type: redis
+  messages:
+    basename: i18n/messages,org/springframework/security/messages
+    encoding: UTF-8
+
+server:
+  servlet:
+    session:
+      timeout: 24h
+      cookie:
+        name: CASSESSION
+    
+htcf:
+  index: 
+    indexPath: redirect:http://localhost:8848/trunk/views/index.html
+  cas:
+    filterSecurity: false
+    loginPageUrl: /views/user/login.html
+    anonymous:
+    - /views/**
+    - /layuiadmin/**
+    - /frame/auth/**
+    - /login/**
+    - /login
+    - /favicon.ico
+    - /v2/api-docs
+    - /swagger-ui.html
+    - /swagger-resources/**
+    - /webjars/**
+    - /actuator/**
+    - /eureka/**
+    - /svn/**
+    - /console
+    - /console/**
+    - /test2/**
+    
+    webRequestMatchers:
+    - /
+    - /oauth/authorize
+    - /login
+    - /views/**
+    - /layuiadmin/**
+    - /logout
+    - /actuator/**
+    - /rc

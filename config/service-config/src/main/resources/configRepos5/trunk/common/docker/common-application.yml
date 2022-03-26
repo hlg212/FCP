@@ -1,0 +1,47 @@
+fcf:
+  application:
+    config:
+      port: 8181
+    rc:
+      port: 8082
+    cas:
+      port: 8083
+    gateway:
+      port: 8084
+    system:
+      port: 8085
+    sso:
+      port: 8086
+    apiGateway:
+      port: 8087
+    files:
+      port: 8088  
+    admin:
+      port: 8089
+    esb:
+      port: 8090
+    rtp:
+      port: 8091
+    task:
+      port: 8092
+    log:
+      port: 8093
+    automate:
+      port: 8094
+    sbadmin:
+      port: 8095
+    basic:
+      port: 8096
+    rtplog:
+      port: 8097
+    dam:
+      port: 8580
+    generator:
+      port: 8281
+     
+server:
+  #端口
+  port: ${fcf.application.${spring.application.name}.port:8080}
+  servlet:
+    #上下文
+    contextPath: /${spring.application.name}

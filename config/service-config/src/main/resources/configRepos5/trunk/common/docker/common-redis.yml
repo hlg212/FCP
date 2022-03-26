@@ -1,0 +1,39 @@
+fcf:
+  redis:
+    config:
+      database: 15
+    rc:
+      database: 14
+    cas:
+      database: 13
+    gateway:
+      database: 12
+    basic:
+      database: 11
+    sso:
+      database: 10
+    apiGateway:
+      database: 9
+    admin:
+      database: 8
+    files:
+      database: 7
+    esb:
+      database: 6
+    rtp:
+      database: 5
+    system:
+      database: 4
+    jcj:
+      database: 1
+    daqwgl:
+      database: 15
+
+spring:
+  redis:
+    host: 192.168.0.71
+    database: ${fcf.redis.${spring.application.name}.database:0}
+    timeout: 5000ms
+    #sentinel:
+    #  nodes: 192.168.0.71:28000,192.168.0.71:28001,192.168.0.71:28002
+    #  master: mymaster

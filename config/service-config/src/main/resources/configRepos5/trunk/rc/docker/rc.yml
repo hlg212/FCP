@@ -1,0 +1,14 @@
+eureka:
+  server:
+    #配置关闭自我保护
+    enable-self-preservation: false
+    #配置Eureka Server清理无效节点的时间间隔(毫秒)
+    eviction-interval-timer-in-ms: 10000000
+    #peer-eureka-status-refresh-time-interval-ms: 10000
+    peer-eureka-nodes-update-interval-ms: 10000000
+---
+eureka:
+  client:
+    healthcheck:
+    #开启健康检查
+      enabled: true

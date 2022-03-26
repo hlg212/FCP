@@ -1,9 +1,0 @@
-management:
-  endpoints:
-    web:
-      exposure:
-        #监控跟踪 spring boot 2.0特性
-        include: health,bus-env,bus-refresh,env,refresh,info,loggers,gateway,channels,bindings,metrics,threaddump,heapdump
-  endpoint:
-    health:
-        show-details: always

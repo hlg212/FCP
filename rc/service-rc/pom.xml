@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>rc</artifactId>
+        <groupId>io.github.hlg212.fcp.rc</groupId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>service-rc</artifactId>
+    <properties>
+        <!-- 扁平化pom文件 (参数被替换) -->
+        <flatten.updatePomFile>true</flatten.updatePomFile>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>io.github.hlg212.fcp.rc</groupId>
+            <artifactId>facade-rc</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+        </dependency>
+
+    </dependencies>
+</project>

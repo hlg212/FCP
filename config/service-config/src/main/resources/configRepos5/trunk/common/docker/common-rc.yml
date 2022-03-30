@@ -1,7 +1,7 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8080/psv/eureka/
+      defaultZone: http://localhost:8182/rc/eureka/
     # 是否注册自身到eureka服务器
     registerWithEureka: true
     # 是否从eureka服务器获取注册信息

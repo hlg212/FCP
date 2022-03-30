@@ -3,7 +3,7 @@ fcf:
     config:
       port: 8181
     rc:
-      port: 8082
+      port: 8182
     cas:
       port: 8083
     gateway:

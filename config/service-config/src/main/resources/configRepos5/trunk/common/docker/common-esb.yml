@@ -70,3 +70,12 @@ spring:
         default:
           type: rabbit
       default-binder: default
+
+---
+spring:
+  cloud:
+    bus:
+      enabled: false
+fcf:
+  esb:
+    enable: false

@@ -35,6 +35,7 @@
 ## 生成服务
 生成一个完整的服务，目录接口都存在
 
+[项目工程结构](https://github.com/hlg212/FCP/tree/master/docs/directory_structure.md)
 ![image](https://raw.githubusercontent.com/hlg212/fcf-examples/master/images/generator_project.jpg)
 
 ![image](https://raw.githubusercontent.com/hlg212/fcf-examples/master/images/generator_project_dir.jpg)

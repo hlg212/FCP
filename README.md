@@ -10,7 +10,7 @@
  ## Links
 
 - [Documentation]
-- [工程结构](https://github.com/hlg212/fcf-examples)
+- [工程结构](https://github.com/hlg212/FCP/tree/master/docs/directory_structure.md)
 - [微服务模式部署](https://github.com/hlg212/fcf-examples)
 - [集成单体模式部署](https://github.com/hlg212/FCP)
 

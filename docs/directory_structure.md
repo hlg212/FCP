@@ -27,10 +27,20 @@
 
 当执行构建打包时，通常是在该层运行，使服务的多个模块版本都能统一一致
 
+```
+# 到服务目录
+cd curdie 
+# 或 deploy
+mvn install 
+cd service-curdie/target
+# 运行
+java -jar service-curdie-exec.jar
+```
+
 #### 接口
 该模块仅存放服务中的数据结构定义与接口定义
 
-**不要包含业务开发逻辑与代码**
+不要包含业务开发逻辑与代码
 
 #### 实现
 业务的实现模块

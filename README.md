@@ -10,8 +10,9 @@
  ## Links
 
 - [Documentation]
-- [部署](https://github.com/hlg212/fcf-examples)
-- [集成单体部署](https://github.com/hlg212/FCP)
+- [工程结构](https://github.com/hlg212/fcf-examples)
+- [微服务模式部署](https://github.com/hlg212/fcf-examples)
+- [集成单体模式部署](https://github.com/hlg212/FCP)
 
 ## 服务组件
 |  名称   | 中文  |  说明  |
@@ -78,7 +79,7 @@
 
 ## 交流反馈
 * 交流请进群：
-	* QQ：
+	* QQ： 643083402
 	* 微信：
 * 个人邮箱：xiaolaoban212@qq.com
 

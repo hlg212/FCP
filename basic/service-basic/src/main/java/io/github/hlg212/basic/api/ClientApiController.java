@@ -62,7 +62,7 @@ public class ClientApiController implements QueryController<ClientBo, ClientQco>
 
     @Override
     @Cacheable(key =  io.github.hlg212.fcf.cache.Constants.ClientKey.getAuthoritysByKhdid_spel)
-    public Map getAuthoritysByKhdid(String khdid) {
+    public Map getAuthoritysByClientId(String clientId) {
         Map map = new HashMap();
 
 //        QueryProperty qp = new QueryProperty();

@@ -1,24 +1,9 @@
-fcf:
-  config:
+#fcf:
+#  config:
 ##    uri: ${htcf.config.uri}
-    uri: http://localhost:8181/config/svn
+
 
 # 监控用的应用信息
----
-#spring:
-#  profiles:
-#    include:
-#      - config/common/common.yml
-#      - config/common/common-actuator.yml
-#      - config/common/common-application.yml
-#      - config/common/common-db.yml
-#      - config/common/common-esb.yml
-#      - config/common/common-log.yml
-#      - config/common/common-mq.yml
-#      - config/common/common-oauth.yml
-#      - config/common/common-rc.yml
-#      - config/common/common-redis.yml
----
 info:
   app:
     name: ${spring.application.name}

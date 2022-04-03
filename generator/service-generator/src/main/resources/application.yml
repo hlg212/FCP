@@ -24,38 +24,6 @@ htcf:
       enable: false
 ---
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /console
-      settings:
-        trace: false
-        web-allow-others: true
----
-#htcf:
-#  enable-data-source: true
-#  datasource:
-#    main:
-#      url: jdbc:p6spy:h2:file:./h2test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-#      username: sa
-#      password:
-#      driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-#      initial-size: 0
-#      min-idle: 2
-#      max-active: 5
-#      max-wait: 6000
-#      time-between-eviction-runs-millis: 3600000
-#      min-evictable-idle-time-millis: 30000
-#      validation-query: select 'x' from dual
-#      test-while-idle: true
-#      test-on-borrow: false
-#      test-on-return: false
-#      pool-prepared-statements: true
-#      max-pool-prepared-statement-per-connection-size: 20
-#      filters: stat
-#      default: true
----
-spring:
   cloud:
     bus:
       enabled: false
@@ -63,6 +31,3 @@ fcf:
   esb:
     enable: false
 ---
-eureka:
-  client:
-    enabled: false

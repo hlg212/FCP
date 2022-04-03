@@ -15,7 +15,7 @@
     <description>平台-代码生成</description>
     <properties>
         <!-- 后期开启,前期 框架、平台 版本一致的情况使用上级定义的版本
-        <htcf-frame.version>2.0.0-SNAPSHOT</htcf-frame.version>
+        <fcf.version>1.0.1</fcf.version>
         -->
         <revision>0.1.0-SNAPSHOT</revision>
         <flatten.pomElements.properties>resolve</flatten.pomElements.properties>

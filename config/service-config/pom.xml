@@ -34,11 +34,14 @@
                <activeByDefault>true</activeByDefault>
            </activation>
             <properties>
-                <htcf.svn.uri>http://47.97.82.253:8443/svn/CFFZ/code/product/1801_jichupingtai/configRepos</htcf.svn.uri>
-                <htcf.svn.username>huanglg</htcf.svn.username>
-                <htcf.svn.password>110110</htcf.svn.password>
-                <htcf.config.uri>http://localhost:8081/config/svn</htcf.config.uri>
-                <htcf.profile>docker</htcf.profile>
+                <fcf.config.svn.uri>http://localhost:8443/svn/configRepos</fcf.config.svn.uri>
+                <fcf.config.svn.username>huanglg</fcf.config.svn.username>
+                <fcf.config.svn.password>123</fcf.config.svn.password>
+                <fcf.config.svn.uri> https://gitee.com/xiaolaoban212/fcf-config-repos.git</fcf.config.svn.uri>
+                <fcf.config.git.username>xiaolaoban212</fcf.config.git.username>
+                <fcf.config.git.password>123</fcf.config.git.password>
+                <fcf.config.uri>http://localhost:8081/config/svn</fcf.config.uri>
+                <fcf.config.profile>docker</fcf.config.profile>
             </properties>
         </profile>
     </profiles>

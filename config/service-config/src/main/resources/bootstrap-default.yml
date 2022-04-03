@@ -12,7 +12,7 @@ spring:
     config:
       enabled: true
       server:
-        prefix: /svn
+        prefix: /repo
         bootstrap: true
         composite:
         - type: native
@@ -21,4 +21,5 @@ spring:
             - ${fcf.config.repos:classpath:configRepos5}/{label}/{application}/${fcf.profile:docker}
             - ${fcf.config.repos:./configTest}/{label}/{application}/${fcf.profile:docker}
           add-label-locations: false
+          default-label: trunk
           fail-on-error: true

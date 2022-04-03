@@ -24,10 +24,6 @@ fcf:
       database: 5
     system:
       database: 4
-    jcj:
-      database: 1
-    daqwgl:
-      database: 15
 
 spring:
   redis:

@@ -12,13 +12,13 @@ spring:
     config:
       enabled: true
       server:
-        prefix: /svn
+        prefix: /repo
         bootstrap: true
         svn:
-          uri: ${htcf.svn.uri}
-          username: ${htcf.svn.username}
-          password: ${htcf.svn.password}
-          search-paths: '{application}/${htcf.profile:docker}'
+          uri: ${fcf.config.svn.uri}
+          username: ${fcf.config.svn.username}
+          password: ${fcf.config.svn.password}
+          search-paths: '{application}/${fcf.profile:docker}'
           default-label: trunk
 
 

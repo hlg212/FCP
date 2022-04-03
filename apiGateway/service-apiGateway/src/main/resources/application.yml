@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: apiGateway # Application name.
+
+
+---
+fcf:
+  cache:
+    enable: false
+---

@@ -1,0 +1,65 @@
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  cloud:
+    gateway:
+      httpclient:
+        connectTimeout: 1500
+        response-timeout: 60s
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+          filters:
+          - RibbonStatsRecorder
+          - name: Hystrix
+            args:
+              name: serviceId+'_globalcmd'
+      default-filters:
+        - PreserveHostHeader
+      routes:
+      # 网关本身没有contextPath,通过自己转发自己，达到能处理contextPath
+      - id: self
+        uri: http://localhost:${server.port}
+        predicates:
+        - Path=/${spring.application.name}/**
+        filters:
+        - StripPrefix=1
+        order: -11000
+      - id: self2
+        uri: http://localhost:${server.port}
+        predicates:
+        - Path=/apigateway/**
+        filters:
+        - StripPrefix=1
+        order: -11000
+                
+fcf:
+  swagger:
+    enable: false
+
+server:
+  servlet:
+    contextPath: 
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+          semaphore:
+            maxConcurrentRequests: 1500
+      fallback:
+        isolation:
+          semaphore:
+            maxConcurrentRequests: 1500
+      circuitBreaker:
+        requestVolumeThreshold: 100
+  threadpool:
+    default:
+      coreSize: 30
+      maximumSize: 30

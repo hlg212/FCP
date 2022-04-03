@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: config
+  autoconfigure:
+    exclude:
+    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  profiles:
+    active:
+    - git
+  cloud:
+    config:
+      enabled: true
+      server:
+        prefix: /repo
+        bootstrap: true
+        git:
+          uri: ${fcf.config.git.uri}
+          username: ${fcf.config.git.username}
+          password: ${fcf.config.git.password}
+          search-paths: 'trunk/{application}/${fcf.profile:local}'
+          #default-label: trunk
+          timeout: 10
+          skipSslValidation: true
+

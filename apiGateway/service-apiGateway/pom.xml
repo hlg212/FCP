@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>apiGateway</artifactId>
+        <groupId>io.github.hlg212.fcp.gateway</groupId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>service-apiGateway</artifactId>
+    <properties>
+        <!-- 扁平化pom文件 (参数被替换) -->
+        <flatten.updatePomFile>true</flatten.updatePomFile>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.hlg212.fcf</groupId>
+            <artifactId>fcf-starter</artifactId>
+            <version>${fcf.version}</version>
+            <type>pom</type>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.github.hlg212.fcp.gateway</groupId>
+            <artifactId>starter-gateway</artifactId>
+            <version>${gateway.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,116 @@
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  cloud:
+    gateway:
+      httpclient:
+        connectTimeout: 1500
+        response-timeout: 60s
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+          filters:
+            - name: Hystrix
+              args:
+                name: serviceId+'_globalcmd'
+                fallbackUri: "'forward:/errorFallback'"
+            - GetRetry
+            - RetryExceptionTransform
+            - RibbonStatsRecorder
+          url-expression: "'lb://FASTGATEWAY'"
+      default-filters:
+        - PreserveHostHeader
+        - TokenHeader
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            allowedMethods:
+              - GET
+              - POST
+              - OPTIONS
+              - DELETE
+      routes:
+      # 网关本身没有contextPath,通过自己转发自己，达到能处理contextPath
+      - id: self
+        uri: http://localhost:${server.port}
+        predicates:
+        - Path=/${spring.application.name}/**
+        filters:
+        - StripPrefix=1
+        order: -11000
+        
+      - id: lrrGateway
+        uri: lb://APIGATEWAY
+        predicates:
+        - NantPath=/actuator/**|/swagger-ui.html|/swagger-resources/**|/webjars/**
+        - LrrPath=
+        filters:
+        - name: Hystrix
+          args:
+            name: lrrGateway_globalcmd
+            fallbackUri: forward:/errorFallback
+        - GetRetry
+        - RetryExceptionTransform
+        - RibbonStatsRecorder
+        order: -11000
+server:
+  servlet:
+    contextPath: 
+#
+fcf:
+  gateway:
+    security:
+      enabled: true
+      blackWhiteList:
+        appEnabled: true
+        globalEnabled: true
+        userEnabled: true
+      anonymous:
+        - /favicon.ico
+        - /**/favicon.ico
+        - /*/v2/api-docs
+        - /**/*.js
+        - /**/*.css
+        - /**/*.woff*
+        - /**/*.ttf
+        - /**/layuiadmin/**
+        - /v2/api-docs
+        - /swagger-ui.html
+        - /*/swagger-ui.html
+        - /**/swagger-resources/**
+        - /swagger-resources/**
+        - /webjars/**
+        - /*/webjars/**
+        - /cas/**
+        - /sso/**
+        - /system/test/**
+        - /**/auth/login
+        - /**/auth/toLogin
+        - /*/views/user/login.html
+        - /*/frame/login
+        - /*/frame/login/**
+  swagger:
+    enable: false
+    
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+          semaphore:
+            maxConcurrentRequests: 1500
+      fallback:
+        isolation:
+          semaphore:
+            maxConcurrentRequests: 1500
+      circuitBreaker:
+        requestVolumeThreshold: 100

@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: gateway # Application name.
+---
+fcf:
+  cache:
+    enable: false

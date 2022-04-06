@@ -19,7 +19,7 @@
         <spring-boot-maven-plugin.skip>false</spring-boot-maven-plugin.skip>
 
         <!-- 框架版本，下级项目自行覆盖 -->
-        <fcf.version>1.0.1</fcf.version>
+        <fcf.version>1.0.3</fcf.version>
 
         <flatten.flattenMode>bom</flatten.flattenMode>
         <flatten.pomElements.properties>keep</flatten.pomElements.properties>

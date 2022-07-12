@@ -17,7 +17,7 @@ public class DictBo extends Dict implements IDict {
 	
 	private static final long serialVersionUID = 1L;
 
-	private List<DictBo> childrens;
+	private List<DictBo> children;
 
 	@Override
 	public String getKey() {
@@ -36,6 +36,6 @@ public class DictBo extends Dict implements IDict {
 
 	@Override
 	public List<DictBo> getChildren() {
-		return childrens;
+		return children;
 	}
 }

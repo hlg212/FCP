@@ -16,5 +16,13 @@ public class UserQco extends Qco {
 	private static final long serialVersionUID = 1L;
 	@Field(description = "账号等于")
 	private String account;
-	
+
+	@Field(description = "名称模糊匹配")
+	private String nameLike;
+
+	@Field(description = "账号模糊匹配")
+	private String accountLike;
+
+	@Field(description = "创建时间排序")
+	private String createTimeOrder="desc";
 }

@@ -1,6 +1,6 @@
 package io.github.hlg212.generator.conf;
 
-import io.github.hlg212.fcf.core.RoutingDataSource;
+import io.github.hlg212.fcf.core.data.RoutingDataSource;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

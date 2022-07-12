@@ -2,6 +2,7 @@ package io.github.hlg212.basic.model.bo;
 
 import io.github.hlg212.basic.model.po.Res;
 import io.github.hlg212.fcf.model.basic.IRes;
+import io.github.hlg212.fcf.model.basic.ITree;
 import lombok.Data;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class ResBo extends Res implements IRes {
 	
 	private static final long serialVersionUID = 1L;
 
-	private List<ResBo> childrens;
+	private List<ResBo> children;
 
 	@Override
 	public String getCode() {
@@ -36,6 +37,6 @@ public class ResBo extends Res implements IRes {
 
 	@Override
 	public List<ResBo> getChildren() {
-		return this.childrens;
+		return this.children;
 	}
 }

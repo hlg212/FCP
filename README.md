@@ -23,13 +23,13 @@
 |  ----  | ----  | ----  |
 | rc  | 注册中心 |  |
 | config  | 配置中心 |  |
-|   | 基础服务 |  |
+| basic | 基础服务 |  |
 | generator  | 代码生成 |  |
 | gateway  | 权限网关 |  |
-|   | 文件中心 |  |
+| cas | 认证中心 |  |
+| file  | 文件中心 |  |
 |   | 日志中心 |  |
 |   | 数据权限中心 |  |
-|   | 认证中心 |  |
 |   | 消息推送 |  |
 |   | 辅助服务 |  |
 |   | 网关管理 |  |
@@ -75,13 +75,18 @@
 ## 选型
 |  名称   | 版本  |  说明  |
 |  ----  | ----  | ----  |
-| spring cloud gateway  | 单元格 | 单元格 |
-| spring cloud config  | 单元格 | 单元格 |
-| eureka  | 单元格 | 单元格 |
-| xxl-job  | 单元格 | 单元格 |
-| fdfs  | 单元格 | 单元格 |
-| spring boot admin  | 单元格 | 单元格 |
-| oauth2  | 单元格 | 单元格 |
+| spring cloud gateway  |  | 网关 |
+| spring cloud config  |  | 配置中心 |
+| eureka  |  | 注册中心 |
+| xxl-job  |  | 分布式任务调度 |
+| fdfs  |  | 分布式文件 |
+| spring boot admin  |  | 监控 |
+| oauth2  |  | 认证 |
+| shard-sphere-jdbc  |  | 分表分库 |
+| rabbitmq  |  |  |
+| redis  |  |  |
+
+
 
 ## 交流反馈
 * 交流请进群：

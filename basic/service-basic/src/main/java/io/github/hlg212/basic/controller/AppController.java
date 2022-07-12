@@ -1,5 +1,6 @@
 package io.github.hlg212.basic.controller;
 
+import io.github.hlg212.fcf.web.controller.CurdieController;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,6 @@ import io.github.hlg212.basic.model.qco.AppQco;
 @RestController
 @RequestMapping("/app")
 @Api(value="应用控制器",tags={"应用"})
-public class AppController implements CurdController<AppBo, AppQco> {
+public class AppController implements CurdieController<AppBo, AppQco> {
 	
 }

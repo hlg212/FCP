@@ -33,7 +33,7 @@ public class Client extends Model {
 	private String passwd;
 
 	@Field(description="授权方式")
-	private String authTypes;
+	private String grantType;
 
 	@Field(description="回调地址")
 	private String authCallbacks;

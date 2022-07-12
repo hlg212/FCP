@@ -1,9 +1,17 @@
 package io.github.hlg212.basic.service.impl;
 
+import io.github.hlg212.basic.model.bo.AppBo;
 import io.github.hlg212.basic.model.bo.AppRoleBo;
+import io.github.hlg212.basic.model.qco.AppRoleQco;
 import io.github.hlg212.basic.service.AppRoleService;
+import io.github.hlg212.basic.service.AppService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /** 
  * 应用-角色Service
@@ -14,11 +22,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AppRoleServiceImpl implements AppRoleService {
 
+    @Autowired
+    private AppService appService;
+
     @Override
-    @Transactional
-    public AppRoleBo save1(AppRoleBo appRoleBo) throws Exception {
-        if( 1 == 1)
-        throw  new RuntimeException("123");
-        return AppRoleService.super.save(appRoleBo);
+    public List<AppBo> getApps(List<String> roleIds) {
+        return listAppByRole(roleIds);
+    }
+
+    private List<AppBo> listAppByRole(List<String> roleIds)
+    {
+        AppRoleQco appRoleQco = new AppRoleQco();
+        appRoleQco.setRoleIdIn(roleIds);
+        List<AppRoleBo> appRoles = find(appRoleQco);
+        Set<String> appIdSet = new HashSet<>();
+        List<AppBo> apps = new ArrayList<>();
+        for( AppRoleBo appRoleBo : appRoles )
+        {
+            if( !appIdSet.contains(appRoleBo.getAppId()))
+            {
+                apps.add(appService.getById(appRoleBo.getAppId()));
+            }
+        }
+        return apps;
     }
 }

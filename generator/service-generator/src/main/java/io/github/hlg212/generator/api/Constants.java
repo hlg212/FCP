@@ -9,7 +9,7 @@ public class Constants {
 
     public final static String APP_APIGATEWAY_XXL = "${htcf.feign."+ XXL_PATH + ".gateway:apiGateway}";
 
-    public static class AppFeignUrl
+    public static class ApiUrl
     {
         public final static String XXL_JOB =  "${htcf.feign."+ XXL_PATH + ".url:}";
 

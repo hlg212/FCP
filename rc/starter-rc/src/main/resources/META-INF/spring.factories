@@ -1,4 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.htcf.rc.AppAutoConfiguration
+  io.github.hlg212.rc.AppAutoConfiguration
 

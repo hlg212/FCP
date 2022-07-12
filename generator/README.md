@@ -7,7 +7,7 @@
  
  生成服务 —— 不仅生成代码，还生成服务目录结构，只需要导入到idea就可以开始开发
 
- 生成系统 —— 一个系统多个服务，一般都是项目开始时生成，参考 [FCF项目结构]()
+ 生成系统 —— 一个系统多个服务，一般都是项目开始时生成，参考 [FCF项目结构](https://github.com/hlg212/FCP/tree/master/docs/directory_structure.md)
 
 # 接口
 ![image](https://raw.githubusercontent.com/hlg212/fcf-examples/master/images/generator_show.jpg)

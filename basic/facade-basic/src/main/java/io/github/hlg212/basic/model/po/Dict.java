@@ -29,6 +29,12 @@ public class Dict extends Model {
 	@Field(description="上级id")
 	private String parentDictId;
 
+	@Field(description="级别")
+	private Integer treeLevel;
+
+	@Field(description="定位码")
+	private String locationCode;
+
 	@Field(description="名称")
 	private String name;
 

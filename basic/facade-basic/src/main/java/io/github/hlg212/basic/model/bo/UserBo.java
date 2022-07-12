@@ -27,4 +27,8 @@ public class UserBo extends User implements IUser {
 	public IOrg getOrg() {
 		return org;
 	}
+
+	public void setOrg(OrgBo org) {
+		this.org = org;
+	}
 }

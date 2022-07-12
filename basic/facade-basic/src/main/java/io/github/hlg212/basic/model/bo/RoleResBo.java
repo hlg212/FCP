@@ -11,5 +11,5 @@ import io.github.hlg212.basic.model.po.RoleRes;
 public class RoleResBo extends RoleRes {
 	
 	private static final long serialVersionUID = 1L;
-	
+
 }

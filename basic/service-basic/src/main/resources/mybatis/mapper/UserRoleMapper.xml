@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.github.hlg212.basic.dao.UserRoleDao">
-	
+    <select id="getRoleIds" resultType="io.github.hlg212.basic.model.bo.ResBo">
+        select t1.role_id from
+        T_ROLE_RES t1
+        join T_ROLE t2 on t1.role_id = t2.id
+        join T_RES t3 on t3.id = t1.res_id
+        join T_USER_ROLE t4 on t4.role_id = t2.id
+        where
+        and t2.type =  #{roleType}
+        and t4.user_id =  #{userId}
+        and t3.type
+        <foreach  item="item" index="index" collection="resTypes" open="(" separator="," close=" )">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

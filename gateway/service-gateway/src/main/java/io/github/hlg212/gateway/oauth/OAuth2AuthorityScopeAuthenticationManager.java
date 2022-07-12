@@ -1,6 +1,8 @@
 package io.github.hlg212.gateway.oauth;
 
 import io.github.hlg212.fcf.api.ClientApi;
+import io.github.hlg212.fcf.model.basic.IClientAuthority;
+import io.github.hlg212.fcf.util.CollectionHelper;
 import io.github.hlg212.gateway.cache.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -70,12 +72,14 @@ public class OAuth2AuthorityScopeAuthenticationManager  extends OAuth2Authentica
     private List retainAuthorities( OAuth2Authentication au)
     {
         Set<String> scopes = au.getOAuth2Request().getScope();
-        Set<String> zys = new HashSet<String>();
-        Map jsQx = clientApi.getAuthoritysByKhdid(au.getOAuth2Request().getClientId());
-        List<String> lists = new ArrayList<>();
-        for(String jsid : scopes){
-            if(jsQx.containsKey(jsid)){
-                zys.addAll((List<String>)jsQx.get(jsid));
+        Set<String> authoritys = new HashSet<String>();
+        Collection<IClientAuthority> clientApiAuthoritys = clientApi.getAuthoritys(au.getOAuth2Request().getClientId());
+
+        Map roleAuthMap = CollectionHelper.getPropertyMap(clientApiAuthoritys,"roleId");
+
+        for(String roleId : scopes){
+            if(roleAuthMap.containsKey(roleId)){
+                authoritys.addAll((Collection<String>)roleAuthMap.get(roleId));
             }
         }
         Collection as = au.getAuthorities();
@@ -84,7 +88,7 @@ public class OAuth2AuthorityScopeAuthenticationManager  extends OAuth2Authentica
         while( iter.hasNext() )
         {
             GrantedAuthority ga = (GrantedAuthority) iter.next();
-            if(  zys.contains(ga.getAuthority()) ) {
+            if(  authoritys.contains(ga.getAuthority()) ) {
                 result.add(ga);
             }
         }

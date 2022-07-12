@@ -1,0 +1,14 @@
+#fcf:
+#  config:
+#    uri: ${fcf.config.uri}
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: ${project.description}
+    version: ${project.version}
+    encoding: ${project.build.sourceEncoding}
+    java:
+      version: ${java.version}
+    frame:
+      version: ${fcf-frame.version}

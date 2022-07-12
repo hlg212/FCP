@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.hlg212.basic.dao.UserResDao">
+
+
+    <select id="getAppMenuRes" resultType="io.github.hlg212.basic.model.bo.ResBo">
+        select T4.*
+        from T_USER_ROLE T
+                 JOIN T_ROLE T1 ON T.role_id = T1.id
+                 JOIN T_APP_ROLE T2 ON T1.ID = T2.role_id
+                 JOIN T_ROLE_RES T3 ON T1.ID = T3.role_id
+                 JOIN T_RES T4 ON T4.ID = T3.res_id
+        WHERE T.user_id = #{userId}
+          AND T2.app_id = #{appId}
+          AND T1.type = #{roleType}
+    </select>
+
+    <select id="getAppPermissions" resultType="io.github.hlg212.basic.model.bo.ResBo">
+        select DISTINCT T4.permission_code
+        from T_USER_ROLE T
+                 JOIN T_ROLE T1 ON T.role_id = T1.id
+                 JOIN T_APP_ROLE T2 ON T1.ID = T2.role_id
+                 JOIN T_ROLE_RES T3 ON T1.ID = T3.role_id
+                 JOIN T_RES T4 ON T4.ID = T3.res_id
+        WHERE AND T4.permission_code is not null
+        <if test="userId != null and userId != ''">
+          AND T.user_id = #{userId}
+        </if>
+        <if test="appId != null and appId != ''">
+          AND T2.app_id = #{appId}
+        </if>
+        <if test="roleType != null and roleType != ''">
+          AND T1.type = #{roleType}
+        </if>
+
+    </select>
+
+    <select id="getAllPermissions" resultType="io.github.hlg212.basic.model.bo.ResBo">
+        select DISTINCT T4.permission_code
+        from T_USER_ROLE T
+                 JOIN T_ROLE T1 ON T.role_id = T1.id
+                 JOIN T_ROLE_RES T3 ON T1.ID = T3.role_id
+                 JOIN T_RES T4 ON T4.ID = T3.res_id
+        WHERE  T4.permission_code is not null
+        <if test="roleType != null and roleType != ''">
+          AND  T.user_id = #{userId}
+        </if>
+        <if test="roleType != null and roleType != ''">
+          AND T1.type = #{roleType}
+        </if>
+    </select>
+
+</mapper>

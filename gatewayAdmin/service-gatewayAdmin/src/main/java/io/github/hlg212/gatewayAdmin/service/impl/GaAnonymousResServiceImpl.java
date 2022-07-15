@@ -4,7 +4,7 @@ import io.github.hlg212.gatewayAdmin.service.GaAnonymousResService;
 import org.springframework.stereotype.Service;
 
 /** 
- * 应用Service
+ * 匿名资源Service
  *
  * @author huanglg
  * @date 2022-04-03

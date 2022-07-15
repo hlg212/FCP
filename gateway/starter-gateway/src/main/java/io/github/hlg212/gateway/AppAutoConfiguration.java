@@ -8,7 +8,7 @@ import org.springframework.core.Ordered;
 
 @CloudApplicationScan
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
-@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {Application.class}))
+@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {GatewayApplication.class}))
 public class AppAutoConfiguration //extends CloudApplicationAutoConfiguration
 {
 }

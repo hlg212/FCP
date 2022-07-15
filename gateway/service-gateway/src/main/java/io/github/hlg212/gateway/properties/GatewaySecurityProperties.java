@@ -6,9 +6,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.List;
 
 
-@ConfigurationProperties(prefix = "fcf.gateway.security")
+@ConfigurationProperties(prefix = GatewaySecurityProperties.PREFIX)
 @Data
 public class  GatewaySecurityProperties {
+	public static final String PREFIX = "fcf.gateway.security";
 	
 	private Boolean enabled;
 	// 接口权限验证开启，默认开启

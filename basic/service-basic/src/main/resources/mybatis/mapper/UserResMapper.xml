@@ -4,7 +4,7 @@
 
 
     <select id="getAppMenuRes" resultType="io.github.hlg212.basic.model.bo.ResBo">
-        select T4.*
+        select DISTINCT T4.*
         from T_USER_ROLE T
                  JOIN T_ROLE T1 ON T.role_id = T1.id
                  JOIN T_APP_ROLE T2 ON T1.ID = T2.role_id
@@ -15,7 +15,7 @@
           AND T1.type = #{roleType}
     </select>
 
-    <select id="getAppPermissions" resultType="io.github.hlg212.basic.model.bo.ResBo">
+    <select id="getAppPermissions" resultType="String">
         select DISTINCT T4.permission_code
         from T_USER_ROLE T
                  JOIN T_ROLE T1 ON T.role_id = T1.id
@@ -35,7 +35,7 @@
 
     </select>
 
-    <select id="getAllPermissions" resultType="io.github.hlg212.basic.model.bo.ResBo">
+    <select id="getAllPermissions" resultType="String">
         select DISTINCT T4.permission_code
         from T_USER_ROLE T
                  JOIN T_ROLE T1 ON T.role_id = T1.id

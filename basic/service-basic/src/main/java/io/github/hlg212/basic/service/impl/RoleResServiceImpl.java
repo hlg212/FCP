@@ -12,6 +12,7 @@ import io.github.hlg212.basic.model.qco.RoleResQco;
 import io.github.hlg212.basic.service.AppService;
 import io.github.hlg212.basic.service.ResService;
 import io.github.hlg212.basic.service.RoleResService;
+import io.github.hlg212.basic.util.ResCategoryHelper;
 import io.github.hlg212.fcf.util.CollectionHelper;
 import io.github.hlg212.fcf.util.TreeHelper;
 import lombok.AllArgsConstructor;
@@ -86,9 +87,9 @@ public class RoleResServiceImpl implements RoleResService {
         return roleResDao.listRoleRes(roleId, convertResTypes(resCategory));
     }
 
-    public List<ResBo> getAppRoleResTree(String roleId, String resType) {
-        List<ResBo> treeList = getRoleResTree(roleId, resType);
-        List<AppBo> apps = getAppsByResType(resType);
+    public List<ResBo> getAppRoleResTree(String roleId, String resCategory) {
+        List<ResBo> treeList = getRoleResTree(roleId, resCategory);
+        List<AppBo> apps = getAppsByResType(resCategory);
         return buildAppResTree(apps, treeList);
     }
 
@@ -109,8 +110,8 @@ public class RoleResServiceImpl implements RoleResService {
     }
 
     @Override
-    public List<ResBo> getRes(List<String> roleIds) {
-        return roleResDao.listRes(roleIds);
+    public List<ResBo> getRes(List<String> roleIds,String resCategory) {
+        return roleResDao.listRes(roleIds,convertResTypes(resCategory));
     }
 
     @Override
@@ -127,7 +128,7 @@ public class RoleResServiceImpl implements RoleResService {
 
         List<ResBo> treeList = new ArrayList<>(apps.size());
         for (AppBo bo : apps) {
-            treeList.addAll(resService.getResTreeByAppId(bo.getId()));
+            treeList.addAll(resService.getResTreeByAppId(bo.getId(),resCategory));
         }
         return buildAppResTree(apps, treeList);
     }
@@ -146,16 +147,7 @@ public class RoleResServiceImpl implements RoleResService {
     }
 
     private List<String> convertResTypes(String resCategory) {
-        List<String> types = new ArrayList<>();
-        if (StringUtils.equalsIgnoreCase(ResCategoryEnum.MENU.getValue(),resCategory)) {
-            types.add(ResTypeEnum.MENU.getValue());
-            types.add(ResTypeEnum.COMPONENT.getValue());
-        } else if ( StringUtils.equalsIgnoreCase(ResCategoryEnum.IFACE.getValue(),resCategory)) {
-            types.add(ResTypeEnum.INTERFACE.getValue());
-        } else if ( StringUtils.equalsIgnoreCase( ResCategoryEnum.DATA.getValue(),resCategory) ) {
-            types.add(ResTypeEnum.DATA.getValue());
-        }
-        return types;
+        return ResCategoryHelper.convertResTypes(resCategory);
     }
 
 }

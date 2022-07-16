@@ -4,6 +4,8 @@ import io.github.hlg212.fcf.annotation.Field;
 import io.github.hlg212.fcf.model.Qco;
 import lombok.Data;
 
+import java.util.List;
+
 /** 
  * 角色Qco
  *
@@ -20,6 +22,9 @@ public class RoleQco extends Qco {
 	private String codeLike;
 	@Field(description = "类型等于")
 	private String type;
+
+	@Field(description = "主键 in")
+	private List<String> idIn;
 
 	@Field(description = "创建时间排序")
 	private String createTimeOrder="desc";

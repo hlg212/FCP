@@ -3,6 +3,8 @@ package io.github.hlg212.basic.model.qco;
 import io.github.hlg212.fcf.model.Qco;
 import lombok.Data;
 
+import java.util.List;
+
 /** 
  * 用户-角色Qco
  *
@@ -17,5 +19,7 @@ public class UserRoleQco extends Qco {
 	private String userId;
 
 	private String roleId;
+
+	private List<String> roleIdIn;
 
 }

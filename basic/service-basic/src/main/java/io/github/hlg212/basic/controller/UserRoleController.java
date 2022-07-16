@@ -1,10 +1,8 @@
 package io.github.hlg212.basic.controller;
 
-import io.github.hlg212.basic.model.bo.ResBo;
-import io.github.hlg212.basic.model.bo.RoleResSaveBo;
-import io.github.hlg212.basic.model.bo.UserRoleBo;
-import io.github.hlg212.basic.model.bo.UserRoleSaveBo;
+import io.github.hlg212.basic.model.bo.*;
 import io.github.hlg212.basic.model.qco.UserRoleQco;
+import io.github.hlg212.basic.service.UserResService;
 import io.github.hlg212.basic.service.UserRoleService;
 import io.github.hlg212.fcf.annotation.RequestParamOrBody;
 import io.github.hlg212.fcf.web.controller.CurdController;
@@ -33,13 +31,30 @@ public class UserRoleController implements CurdController<UserRoleBo, UserRoleQc
 
     @Autowired
     private UserRoleService userRoleService;
+    @Autowired
+    private UserResService userResService;
 
     @ResponseBody
     @ApiOperation("保存用户角色信息")
-    @RequestMapping(value="/saveUserRoles",method={RequestMethod.POST})
-    public void saveUserRoles(@RequestParamOrBody UserRoleSaveBo bo){
-        userRoleService.saveUserRoles(bo);
+    @RequestMapping(value="/saveRoles",method={RequestMethod.POST})
+    public void saveRoles(@RequestParamOrBody UserRoleSaveBo bo){
+        userRoleService.saveRoles(bo);
+    }
+
+    @ResponseBody
+    @ApiOperation("获取当前角色拥有的资源树")
+    @RequestMapping(value="/getRoles",method={RequestMethod.POST,RequestMethod.GET})
+    public List<RoleBo> getRoles(String userId)
+    {
+        return userRoleService.getRoles(userId);
     }
 
 
+    @ResponseBody
+    @ApiOperation("获取当前用户拥有的资源树")
+    @RequestMapping(value="/getResTree",method={RequestMethod.POST,RequestMethod.GET})
+    public List<ResBo> getResTree(String userId,String roleType,String resCategory)
+    {
+        return userResService.getResTree(userId,roleType,resCategory);
+    }
 }

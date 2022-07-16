@@ -5,6 +5,8 @@ import io.github.hlg212.fcf.annotation.Field;
 import io.github.hlg212.fcf.model.Qco;
 import lombok.Data;
 
+import java.util.List;
+
 /** 
  * 资源Qco
  *
@@ -27,6 +29,10 @@ public class ResQco extends Qco {
 
 	@Field(description = "资源类型")
 	private String type;
+
+	@Field(description = "资源类型集合")
+	@JsonIgnore
+	private List<String> typeIn;
 
 	@Field(description = "资源路径模糊匹配")
 	private String urlLike;

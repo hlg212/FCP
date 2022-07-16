@@ -69,7 +69,7 @@ public interface RoleResService extends CurdServiceImpl<RoleResBo> {
      */
     public List<ResBo> buildAppResTree(List<AppBo> apps, List<ResBo> treeList);
 
-    public List<ResBo> getRes(List<String> roleIds);
+    public List<ResBo> getRes(List<String> roleIds,String resCategory);
 
     public List<String> listPermissionCodes(String roleId);
 }

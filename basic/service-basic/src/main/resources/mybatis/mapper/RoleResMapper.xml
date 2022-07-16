@@ -3,7 +3,7 @@
 <mapper namespace="io.github.hlg212.basic.dao.RoleResDao">
 
     <select id="listRoleRes" resultType="io.github.hlg212.basic.model.bo.ResBo">
-        select t2.* from T_ROLE_RES t
+        select DISTINCT t2.* from T_ROLE_RES t
                  join T_ROLE t1 on t.role_id = t1.id
                  join T_RES t2 on t.res_id = t2.id
         where t1.id = #{roleId}
@@ -14,18 +14,22 @@
     </select>
 
     <select id="listRes" resultType="io.github.hlg212.basic.model.bo.ResBo">
-        select t2.* from T_ROLE_RES t
+        select DISTINCT t2.* from T_ROLE_RES t
          join T_ROLE t1 on t.role_id = t1.id
          join T_RES t2 on t.res_id = t2.id
         where t1.id in
-        <foreach  item="item" index="index" collection="roleIds" open="(" separator="," close=" )">
+        <foreach  item="roleId" index="index" collection="roleIds" open="(" separator="," close=" )">
+            #{roleId}
+        </foreach>
+        and t2.type in
+        <foreach  item="item" index="index" collection="resTypes" open="(" separator="," close=" )">
             #{item}
         </foreach>
     </select>
 
     <select id="listPermissionCodes" resultType="String">
 
-        select t2.permission_code from T_ROLE_RES t
+        select DISTINCT t2.permission_code from T_ROLE_RES t
                                            join T_ROLE t1 on t.role_id = t1.id
                                            join T_RES t2 on t.res_id = t2.id
         where t1.id = #{roleId}

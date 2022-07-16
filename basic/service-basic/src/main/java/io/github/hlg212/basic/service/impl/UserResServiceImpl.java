@@ -12,6 +12,7 @@ import org.apache.commons.codec.net.QCodec;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 用户-资源Service
@@ -44,7 +45,11 @@ public class UserResServiceImpl implements UserResService {
         }
 
         List<String> roleIds = userRoleService.getRoleIds(userId, roleType, resCategory);
-        List<ResBo> list = roleResService.getRes(roleIds);
+        if(Objects.isNull(roleIds) || roleIds.isEmpty())
+        {
+            return null;
+        }
+        List<ResBo> list = roleResService.getRes(roleIds,resCategory);
         List<AppBo> apps = appRoleService.getApps(roleIds);
         List<ResBo> resTree = TreeHelper.buildTree(list);
         List<ResBo> appParentTree = roleResService.buildAppResTree(apps, resTree);

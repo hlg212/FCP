@@ -17,7 +17,7 @@ public interface RoleResDao extends BaseDao<RoleRes> {
 
     public List<ResBo> listRoleRes(@Param("roleId") String roleId,@Param("resTypes") List<String> resTypes);
 
-    public List<ResBo> listRes(@Param("roleIds")List<String> roleIds);
+    public List<ResBo> listRes(@Param("roleIds")List<String> roleIds,@Param("resTypes") List<String> resTypes);
 
     public List<String> listPermissionCodes(@Param("roleId")String roleId);
 }

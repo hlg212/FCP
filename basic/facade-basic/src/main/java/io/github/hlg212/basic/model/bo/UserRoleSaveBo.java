@@ -19,10 +19,10 @@ public class UserRoleSaveBo {
 	@Field(description="用户ID")
 	private String userId;
 
-	@Field(description="资源id数组")
+	@Field(description="角色id数组")
 	List<String> roleIds;
 
-	@Field(description="资源id数组")
+	@Field(description="删除的角色id数组")
 	List<String> delRoleIds;
 
 }

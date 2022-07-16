@@ -16,7 +16,7 @@ public interface ResService extends CurdieServiceImpl<ResBo> {
 
     public List<ResBo> findTree(ResQco qco);
 
-    public List<ResBo> getResTreeByAppId(String appId);
+    public List<ResBo> getResTreeByAppId(String appId,String resCategory);
 
 
 }

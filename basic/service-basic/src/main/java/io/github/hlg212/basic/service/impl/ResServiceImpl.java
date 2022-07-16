@@ -3,6 +3,7 @@ package io.github.hlg212.basic.service.impl;
 import io.github.hlg212.basic.model.bo.ResBo;
 import io.github.hlg212.basic.model.qco.ResQco;
 import io.github.hlg212.basic.service.ResService;
+import io.github.hlg212.basic.util.ResCategoryHelper;
 import io.github.hlg212.fcf.util.TreeHelper;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,10 @@ public class ResServiceImpl implements ResService {
 
     @Override
     //@Cacheable()
-    public List<ResBo> getResTreeByAppId(String appId) {
+    public List<ResBo> getResTreeByAppId(String appId,String resCategory) {
         ResQco qco = new ResQco();
         qco.setAppId(appId);
+        qco.setTypeIn(ResCategoryHelper.convertResTypes(resCategory));
         List list = find(qco);
         return TreeHelper.buildTree(list);
     }

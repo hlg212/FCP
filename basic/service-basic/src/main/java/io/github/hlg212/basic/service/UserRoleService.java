@@ -25,12 +25,20 @@ public interface UserRoleService extends CurdServiceImpl<UserRoleBo> {
      * @param roleType
      * @return
      */
-    public List<String> getRoleIds(String userId, String roleType,String resCategory);
+    List<String> getRoleIds(String userId, String roleType,String resCategory);
 
     /**
      * 保存用户角色
      *
      * @param bo bo
      */
-    public void saveUserRoles(UserRoleSaveBo bo);
+    void saveRoles(UserRoleSaveBo bo);
+
+
+    /**
+     * 获取用户的角色列表
+     * @param userId 用户id
+     * @return 角色列表
+     */
+    List<RoleBo> getRoles(String userId);
 }

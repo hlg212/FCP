@@ -31,7 +31,7 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column label="名称" prop="name" sortable align="center" width="120" >
+      <el-table-column label="名称" prop="name" sortable align="center" width="140" >
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>
         </template>
@@ -41,12 +41,12 @@
           <span>{{ row.account }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="授权方式" width="100px" align="center">
+      <el-table-column label="授权方式" width="200px" align="center">
         <template slot-scope="{row}">
           <el-tag>{{ row.grantTypes }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="回调地址" align="center" width="220" >
+      <el-table-column label="回调地址" align="center" >
         <template slot-scope="{row}">
           <span>{{ row.authCallbacks }}</span>
         </template>
@@ -75,8 +75,8 @@
           <el-button  size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
-          <el-button  size="mini">
-            分配权限
+          <el-button  size="mini" @click="handleRole(row)">
+            分配角色
           </el-button>
           <el-button  size="mini" @click="handleViewAuth(row)">
             查看权限
@@ -153,8 +153,27 @@
       </el-button>
     </el-dialog>
 
+<el-dialog title="客户端角色分配" :visible.sync="dialogRoleVisible">
+      <el-transfer
+        filterable
+        filter-placeholder="请输入"
+        :props="roleProps"
+        :titles="['Source', 'Target']"
+        v-model="selectdRoles"
+        :data="roleDatas">
+      </el-transfer>
+   
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogRoleVisible = false">
+          取消
+        </el-button>
+        <el-button  type="primary" @click="handleSubmitRole">
+          保存
+        </el-button>
+      </div>
+</el-dialog>
 
-    <el-dialog title="权限分配" :visible.sync="dialogRoleResVisible">
+    <el-dialog title="客户端权限" :visible.sync="dialogResVisible">
        <el-tabs v-model="activeName" @tab-click="handleTabClick">
         <el-tab-pane label="菜单权限" name="menu">
             <el-tree
@@ -169,7 +188,7 @@
           <el-tree
               ref="ifaceTree"
               :data="ifaceData"
-              show-checkbox
+               default-expand-all
               node-key="id"
               :props="defaultProps">
             </el-tree>
@@ -178,15 +197,15 @@
           <el-tree
               ref="dataTree"
               :data="dataData"
-              show-checkbox
+               default-expand-all
               node-key="id"
               :props="defaultProps">
             </el-tree>
           </el-tab-pane>
       </el-tabs>
 
-       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogRoleResVisible = false">
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogResVisible = false">
           取消
         </el-button>
       </div>
@@ -196,7 +215,7 @@
 
 <script>
 import DictHelper from '@/utils/dict'
-import { findPage, getById, save, update,exportPage,importSave, deleteById } from '@/api/basic/client'
+import { findPage, getById, save, update,exportPage,importSave, deleteById,getRoles,getResTree,saveRoles,getAllRoles } from '@/api/basic/client'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -217,6 +236,7 @@ export default {
   data() {
     return {
       _activeRow: null,
+      _activeRowRoles: null,
       activeName:"menu",
       menuData:[],
       roleResIds:[],
@@ -226,7 +246,14 @@ export default {
           children: 'children',
           label: 'name'
       },
-      dialogRoleResVisible:false,
+      roleProps: {
+          key: 'id',
+          label: 'name'
+      },
+      dialogResVisible:false,
+      dialogRoleVisible:false,
+      selectdRoles:[],
+      roleDatas:[],
       typeOptions,
       uploadShow: false,
       uploadKey: 0,
@@ -494,6 +521,76 @@ export default {
             .catch(error => {
                 console.log(error.responce.data.error.message);
             });
+    },
+    handleRole(row){
+      this.dialogRoleVisible = true;
+      this._activeRow = row;
+      this.roleDatas = [];
+      this.selectdRoles = [];
+      this._activeRowRoles = [];
+      var query = {};
+      getAllRoles(query).then(responce => {
+        this.roleDatas = responce.data;
+        getRoles(row.id).then(responce => {         
+          var roleMaps = {};     
+          var selectRoleIds = [];
+          for(var role of responce.data)
+          {
+            selectRoleIds.push(role.id);
+            roleMaps[role.id] = role;
+          }
+          this._activeRowRoles = roleMaps;     
+         this.selectdRoles = selectRoleIds;
+        });
+      });
+    },
+    handleViewAuth(row) {
+      this.dialogResVisible = true;
+      this.activeName = "menu";
+      this._activeRow = row;
+       this.handleTabClick();
+    },  
+    handleTabClick() {
+       var aname = this.activeName;
+       this[aname +"Data"] = [];
+        getResTree(this._activeRow.id,aname).then(response => {
+            this[aname +"Data"] = response.data;            
+        })
+
+    },
+    handleSubmitRole(){
+      var clientRoleSaveBo = {};
+      var roleIds = [];
+      var roleMaps = this._activeRowRoles;     
+      var delRoleIds = [];
+      debugger
+       for(var roleId of this.selectdRoles)
+        {
+           roleIds.push(roleId);
+           delete roleMaps[roleId];
+        }
+      for( var roleId in roleMaps )
+      {
+          delRoleIds.push(roleId);
+      }
+
+      clientRoleSaveBo["clientId"] = this._activeRow.id;
+      clientRoleSaveBo["roleIds"] = roleIds;
+      clientRoleSaveBo["delRoleIds"] = delRoleIds;
+      debugger
+      saveRoles(clientRoleSaveBo).then(res => {
+          this.dialogRoleVisible = false;
+          this.roleDatas = [];
+          this.selectdRoles = [];
+          this._activeRowRoles = [];
+           this.$notify({
+              title: '成功',
+              message: '保存客户端角色成功!',
+              type: 'success',
+              duration: 2000
+            })
+
+      });
     }
   }
 }

@@ -169,6 +169,7 @@
               ref="ifaceTree"
               :data="ifaceData"
               show-checkbox
+               default-expand-all
               node-key="id"
               :props="defaultProps">
             </el-tree>
@@ -178,6 +179,7 @@
               ref="dataTree"
               :data="dataData"
               show-checkbox
+               default-expand-all
               node-key="id"
               :props="defaultProps">
             </el-tree>
@@ -427,10 +429,12 @@ export default {
     handleTabClick() {
        this.dialogRoleResVisible = true;
        var aname = this.activeName;
+       this[aname +"Data"] = [];
         getAppResTree(aname).then(response => {
             this[aname +"Data"] = response.data;
             getRoleResIds(this._activeRow.id,aname).then(response => {
               var list = response.data;
+              debugger
               this.roleResIds = {};
               for(var id of list)
               {

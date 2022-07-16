@@ -84,6 +84,9 @@
           <el-button  size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
+          <el-button  size="mini" @click="handleRole(row)">
+            分配角色
+          </el-button>
           <el-button  size="mini" @click="handleViewAuth(row)">
             查看权限
           </el-button>
@@ -164,7 +167,27 @@
     </el-dialog>
 
 
-    <el-dialog title="权限分配" :visible.sync="dialogRoleResVisible">
+<el-dialog title="用户角色分配" :visible.sync="dialogRoleVisible">
+      <el-transfer
+        filterable
+        filter-placeholder="请输入"
+        :props="roleProps"
+         :titles="['Source', 'Target']"
+        v-model="selectdRoles"
+        :data="roleDatas">
+      </el-transfer>
+    
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogRoleVisible = false">
+          取消
+        </el-button>
+        <el-button  type="primary" @click="handleSubmitRole">
+          保存
+        </el-button>
+      </div>
+</el-dialog>
+
+    <el-dialog title="用户权限" :visible.sync="dialogResVisible">
        <el-tabs v-model="activeName" @tab-click="handleTabClick">
         <el-tab-pane label="菜单权限" name="menu">
             <el-tree
@@ -179,7 +202,7 @@
           <el-tree
               ref="ifaceTree"
               :data="ifaceData"
-              show-checkbox
+               default-expand-all
               node-key="id"
               :props="defaultProps">
             </el-tree>
@@ -188,7 +211,7 @@
           <el-tree
               ref="dataTree"
               :data="dataData"
-              show-checkbox
+               default-expand-all
               node-key="id"
               :props="defaultProps">
             </el-tree>
@@ -196,7 +219,7 @@
       </el-tabs>
 
        <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogRoleResVisible = false">
+        <el-button @click="dialogResVisible = false">
           取消
         </el-button>
       </div>
@@ -207,7 +230,7 @@
 <script>
 import DictHelper from '@/utils/dict'
 import { findPage, getById, save, update,exportPage,importSave, deleteById } from '@/api/basic/user'
-import { getResTree, getUserRoleResTree} from '@/api/basic/userRole'
+import { getRoles,getResTree,saveRoles,getAllRoles} from '@/api/basic/userRole'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -237,6 +260,7 @@ export default {
   data() {
     return {
       _activeRow: null,
+      _activeRowRoles: null,
       activeName:"menu",
       menuData:[],
       roleResIds:[],
@@ -246,7 +270,14 @@ export default {
           children: 'children',
           label: 'name'
       },
-      dialogRoleResVisible:false,
+      roleProps: {
+          key: 'id',
+          label: 'name'
+      },
+      dialogResVisible:false,
+      dialogRoleVisible:false,
+      selectdRoles:[],
+      roleDatas:[],
       typeOptions,
       uploadShow: false,
       uploadKey: 0,
@@ -399,31 +430,7 @@ export default {
           })
         }
       })
-    },
-    handleViewAuth(row) {
-      this.dialogRoleResVisible = true;
-      this.activeName = "menu";
-      this._activeRow = row;
-       this.handleTabClick();
-    },    
-    handleTabClick() {
-       this.dialogRoleResVisible = true;
-       
-       if( this.activeName === "menu")
-       {
-             getResTree(this._activeRow.id,null).then(response => {
-                  this.menuData = response.data;
-              });
-       }
-       else if( this.activeName === "iface")
-       {
-         
-       }
-       else{
-
-       }
-
-    },  
+    }, 
     // 删除数据
     handleDelete(row, index) {
        deleteById(row.id).then(response => {
@@ -514,6 +521,79 @@ export default {
             .catch(error => {
                 console.log(error.responce.data.error.message);
             });
+    },
+    handleRole(row){
+      this.dialogRoleVisible = true;
+      this._activeRow = row;
+      this.roleDatas = [];
+      this.selectdRoles = [];
+      this._activeRowRoles = [];
+      var query = {};
+      getAllRoles(query).then(responce => {
+        this.roleDatas = responce.data;
+        getRoles(row.id).then(responce => {         
+          var roleMaps = {};     
+          var selectRoleIds = [];
+          debugger
+          if( responce.data ){
+            for(var role of responce.data)
+            {
+              selectRoleIds.push(role.id);
+              roleMaps[role.id] = role;
+            }
+          }
+          this._activeRowRoles = roleMaps;     
+         this.selectdRoles = selectRoleIds;
+        });
+      });
+    },    
+    handleViewAuth(row) {
+      this.dialogResVisible = true;
+      this.activeName = "menu";
+      this._activeRow = row;
+       this.handleTabClick();
+    }, 
+    handleTabClick() {
+       var aname = this.activeName;
+       this[aname +"Data"] = [];
+        getResTree(this._activeRow.id,"USE",aname).then(response => {
+            this[aname +"Data"] = response.data;            
+        })
+
+    },
+    handleSubmitRole(){
+      var userRoleSaveBo = {};
+      var roleIds = [];
+      var roleMaps = this._activeRowRoles;     
+      var delRoleIds = [];
+      debugger
+       for(var roleId of this.selectdRoles)
+        {
+           roleIds.push(roleId);
+           delete roleMaps[roleId];
+        }
+      for( var roleId in roleMaps )
+      {
+          delRoleIds.push(roleId);
+      }
+
+      userRoleSaveBo["userId"] = this._activeRow.id;
+      userRoleSaveBo["roleIds"] = roleIds;
+      userRoleSaveBo["delRoleIds"] = delRoleIds;
+      debugger
+      saveRoles(userRoleSaveBo).then(res => {
+          this.dialogRoleVisible = false;
+          this.roleDatas = [];
+          this.selectdRoles = [];
+          this._activeRowRoles = [];
+           this.$notify({
+              title: '成功',
+              message: '保存客户端角色成功!',
+              type: 'success',
+              duration: 2000
+            })
+
+      });
     }
   }
 }

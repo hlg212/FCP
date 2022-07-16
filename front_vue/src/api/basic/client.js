@@ -9,7 +9,12 @@ var moduleUrl ={
   update: serviceUrl + "client/updateAndReturn",
   deleteById: serviceUrl + "client/deleteById",
   exportPage: serviceUrl + "client/exportPage",
-  importSave: serviceUrl + "client/import/upload/save"
+  importSave: serviceUrl + "client/import/upload/save",
+  getRoles: serviceUrl + "clientRole/getRoles",
+  getResTree: serviceUrl + "clientRole/getResTree",
+  saveRoles: serviceUrl + "clientRole/saveRoles",
+
+  getAllRoles: serviceUrl + "role/find"
 }
 // export function findPage(query) {
 //   return request({
@@ -73,7 +78,38 @@ export function importSave(data) {
   return request({
     url: moduleUrl.importSave,
     method: 'post',
-    
+    data
+  })
+}
+
+export function getRoles(clientId) {
+  return request({
+    url: moduleUrl.getRoles,
+    method: 'get',
+    params: { clientId }
+  })
+}
+
+export function getResTree(clientId,resCategory) {
+  return request({
+    url: moduleUrl.getResTree,
+    method: 'get',
+    params: { clientId,resCategory}
+  })
+}
+
+export function saveRoles(data) {
+  return request({
+    url: moduleUrl.saveRoles,
+    method: 'post',
+    data
+  })
+}
+
+export function getAllRoles(data) {
+  return request({
+    url: moduleUrl.getAllRoles,
+    method: 'post',
     data
   })
 }

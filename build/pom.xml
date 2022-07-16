@@ -9,23 +9,30 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <version>${revision}</version>
-    <artifactId>fastGateway</artifactId>
-    <groupId>io.github.hlg212.fcp.gateway</groupId>
+    <artifactId>build</artifactId>
+    <groupId>io.github.hlg212.build</groupId>
     <packaging>pom</packaging>
-    <description>平台-快速网关服务</description>
+    <description>构建所有模块</description>
     <properties>
         <!-- 后期开启,前期 框架、平台 版本一致的情况使用上级定义的版本
-        <fcf.version>1.0.1</fcf.version>-->
-
+        <fcf.version>0.2.0-SNAPSHOT</fcf.version>
+        -->
         <revision>1.0.0-SNAPSHOT</revision>
-        <gateway.version>1.0.0-SNAPSHOT</gateway.version>
         <flatten.pomElements.properties>resolve</flatten.pomElements.properties>
 
     </properties>
 
     <modules>
-        <module>service-fastGateway</module>
-    </modules>
+        <module>../config</module>
+        <module>../rc</module>
+        <module>../basic</module>
+        <module>../system</module>
+        <module>../generator</module>
+        <module>../gateway</module>
+        <module>../fastGateway</module>
+        <module>../apiGateway</module>
+        <module>../gatewayAdmin</module>
 
+    </modules>
 
 </project>

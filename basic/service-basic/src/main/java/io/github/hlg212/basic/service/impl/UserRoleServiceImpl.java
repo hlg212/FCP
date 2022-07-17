@@ -50,6 +50,8 @@ public class UserRoleServiceImpl implements UserRoleService {
     public void saveRoles(UserRoleSaveBo bo) {
         List<String> roleIds = bo.getRoleIds();
         String uid = bo.getUserId();
+        List<String> haves = getRoleIds(uid);
+        roleIds.removeAll(haves);
         List<String> delIds = getDelIds( uid, bo.getDelRoleIds());
         for (String roleId : roleIds) {
             UserRoleBo userRoleBo = new UserRoleBo();

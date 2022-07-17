@@ -86,6 +86,8 @@ public class ClientRoleServiceImpl implements ClientRoleService {
         List<String> roleIds = bo.getRoleIds();
         String cid = bo.getClientId();
         List<String> delIds = getDelIds(cid, bo.getDelRoleIds());
+        List<String> haves = getRoleIds(cid);
+        roleIds.removeAll(haves);
         for (String roleId : roleIds) {
             ClientRoleBo cRoleBo = new ClientRoleBo();
             cRoleBo.setClientId(cid);

@@ -1,5 +1,6 @@
 package io.github.hlg212.cas.cache;
 
+import io.github.hlg212.cas.properties.CasProperties;
 import io.github.hlg212.fcf.cache.CacheHandler;
 import io.github.hlg212.fcf.cache.CacheHandlerReg;
 import io.github.hlg212.fcf.cache.Constants;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@ConditionalOnProperty(value = "cas.filterSecurity",prefix = "htcf")
+@ConditionalOnProperty(value = "filterSecurity",prefix = CasProperties.PREFIX)
 public class AuthCacheHandlerReg implements CacheHandlerReg {
 
     @Autowired

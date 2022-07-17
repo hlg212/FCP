@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 
-@ConfigurationProperties(prefix = "hlg212.cas")
+@ConfigurationProperties(prefix = CasProperties.PREFIX)
 @Component
 @Data
 public class CasProperties {
+	public static final String PREFIX = "fcp.cas";
 
 	private String loginPage;
 	//是否进行并发登录控制

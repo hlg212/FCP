@@ -1,5 +1,6 @@
 package io.github.hlg212.cas.init;
 
+import io.github.hlg212.cas.properties.CasProperties;
 import io.github.hlg212.fcf.api.AuthApi;
 import io.github.hlg212.fcf.model.basic.IRes;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ import java.util.Map;
  **/
 @Component
 @Slf4j
-@ConditionalOnProperty(matchIfMissing = false,value = "cas.filterSecurity",prefix = "htcf")
+@ConditionalOnProperty(matchIfMissing = false,value = "filterSecurity",prefix = CasProperties.PREFIX)
 public class UrlAuthResInit  implements ApplicationListener<ApplicationReadyEvent> {
     @Autowired
     private AuthApi authApi;

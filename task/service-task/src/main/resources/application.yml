@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: task
+---
+xxl:
+  job:
+    executor:
+      appname: xxl-job-executor-task
+      ip: 192.168.11.169
+      port: 9998
+      logpath: /data/applogs/xxl-job/jobhandler/
+      logretentiondays: -1

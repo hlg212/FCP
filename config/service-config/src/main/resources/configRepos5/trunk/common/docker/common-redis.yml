@@ -2,6 +2,7 @@ fcf:
   redis:
     config:
       database: 15
+      host: localhost
     rc:
       database: 14
     cas:
@@ -27,9 +28,9 @@ fcf:
 
 spring:
   redis:
-    host: 192.168.0.71
+    host: 192.168.168.100
     database: ${fcf.redis.${spring.application.name}.database:0}
-    timeout: 5000ms
-    #sentinel:
-    #  nodes: 192.168.0.71:28000,192.168.0.71:28001,192.168.0.71:28002
-    #  master: mymaster
+    timeout: 2000ms
+#    sentinel:
+#      nodes: 192.168.0.71:28000,192.168.0.71:28001,192.168.0.71:28002
+#      master: mymaster

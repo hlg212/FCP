@@ -5,47 +5,48 @@ fcf:
       display: false
   env: dev
   # 注意使用浏览器地址，否则会导致无法正常登出
-  logoutUri: http://localhost:8080/psv/logout
-  accessTokenUri: http://localhost:8080/psv/oauth/token
-  userAuthorizationUri: http://localhost:8080/psv/oauth/authorize
-  checkTokenAccess: http://localhost:8080/psv/oauth/check_token   
-  userInfoUri: http://localhost:8080/psv/userinfo
+  logoutUri: http://localhost:8084/cas/logout
+  accessTokenUri: http://localhost:8083/cas/oauth/token
+  userAuthorizationUri: http://localhost:8083/cas/oauth/authorize
+  checkTokenAccess: http://localhost:8083/cas/oauth/check_token
+  userInfoUri: http://localhost:8083/cas/userinfo
   swagger:
       enable: true
-  log:
-      access:
-        headers: 
-          - User-Agent
-          - System-App-Code
-        ignores:
-          - /**/*.js
-          - /**/*.css
-          - /**/*.woff*
-          - /**/*.ttf
-          - /favicon.ico
-          - /**/favicon.ico
-          - /*/v2/api-docs
-          - /v2/api-docs
-          - /swagger-ui.html
-          - /*/swagger-ui.html
-          - /**/swagger-resources/**
-          - /swagger-resources/**
-          - /webjars/**
-          - /**/webjars/**
-          - /csrf
-          - /**/csrf
-          - /**/frame/login/checkToken
-          - /**/views/**
-          - /views/**
-          - /**/layuiadmin/**
-          - /layuiadmin/**
-          - /*/
-          - /config/svn/**
-          - /**/config/svn/**
-          - /**/actuator/**
-          - /actuator/**
-          - /**/eureka/**
-          - /eureka/**
+  collect:
+      log:
+          access:
+            headers:
+              - User-Agent
+              - System-App-Code
+            ignores:
+              - /**/*.js
+              - /**/*.css
+              - /**/*.woff*
+              - /**/*.ttf
+              - /favicon.ico
+              - /**/favicon.ico
+              - /*/v2/api-docs
+              - /v2/api-docs
+              - /swagger-ui.html
+              - /*/swagger-ui.html
+              - /**/swagger-resources/**
+              - /swagger-resources/**
+              - /webjars/**
+              - /**/webjars/**
+              - /csrf
+              - /**/csrf
+              - /**/frame/login/checkToken
+              - /**/views/**
+              - /views/**
+              - /**/layuiadmin/**
+              - /layuiadmin/**
+              - /*/
+              - /config/svn/**
+              - /**/config/svn/**
+              - /**/actuator/**
+              - /actuator/**
+              - /**/eureka/**
+              - /eureka/**
 
 project:
   description:  

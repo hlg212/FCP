@@ -10,10 +10,12 @@ fcf:
       port: 8084
     system:
       port: 8085
-    sso:
-      port: 8086
     apiGateway:
       port: 8087
+    fastGateway:
+      port: 8086
+    sso:
+      port: 8186
     files:
       port: 8088  
     admin:

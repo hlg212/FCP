@@ -42,12 +42,12 @@ spring:
 
         eventServiceBusFrameInput:
           binder: eventServiceBus
-          destination: ${htcf.esb.destination}.frame
+          destination: ${fcf.esb.destination}.frame
           group: ${spring.application.name}.(${fcf.instanceId})
 
         eventServiceBusCacheInput:
           binder: eventServiceBus
-          destination: ${htcf.esb.destination}.cache
+          destination: ${fcf.esb.destination}.cache
           group: ${spring.application.name}.(${fcf.instanceId})
           
         eventServiceBusOutput:
@@ -72,10 +72,10 @@ spring:
       default-binder: default
 
 ---
-spring:
-  cloud:
-    bus:
-      enabled: false
-fcf:
-  esb:
-    enable: false
+#spring:
+#  cloud:
+#    bus:
+#      enabled: false
+#fcf:
+#  esb:
+#    enable: false

@@ -1,6 +1,10 @@
 spring:
-  session:
-    store-type: redis
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  #  session:
+#    store-type: redis
   messages:
     basename: i18n/messages,org/springframework/security/messages
     encoding: UTF-8
@@ -12,9 +16,10 @@ server:
       cookie:
         name: CASSESSION
     
-htcf:
+fcf:
   index: 
     indexPath: redirect:http://localhost:8848/trunk/views/index.html
+fcp:
   cas:
     filterSecurity: false
     loginPageUrl: /views/user/login.html
@@ -31,7 +36,7 @@ htcf:
     - /webjars/**
     - /actuator/**
     - /eureka/**
-    - /svn/**
+    - /repo/**
     - /console
     - /console/**
     - /test2/**

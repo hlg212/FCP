@@ -1,0 +1,14 @@
+#htcf:
+#  config:
+#    uri: ${htcf.config.uri}
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: ${project.description}
+    version: ${project.version}
+    encoding: ${project.build.sourceEncoding}
+    java:
+      version: ${java.version}
+    frame:
+      version: ${htcf-frame.version}

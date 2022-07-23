@@ -2,13 +2,33 @@ spring:
   application:
     name: task
 ---
-
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+fcf:
+  cache:
+    enable: false
+---
 fcp:
   task:
     job:
-      adminAddresses: http://192.168.168.100:8892/xxl-job-admin
+      adminAddresses: http://192.168.78.150:8892/xxl-job-admin
       appName: fcp-job-executor
-      ip: 192.168.78.150
-      port: 8892
+      #ip: ${spring.cloud.client.ip-address}
+      ip: 192.168.4.101
+      port: 9892
       logPath: /data/applogs/xxl-job/jobhandler/
       logRetentionDays: -1
+      accessToken: default_token
+
+---
+fcf:
+  feign:
+    JobCenterApi:
+      url: http://192.168.78.150:8892
+    JobLogCenterApi:
+      url: http://192.168.78.150:8892
+    TaskApi:
+      url: http://localhost:8092

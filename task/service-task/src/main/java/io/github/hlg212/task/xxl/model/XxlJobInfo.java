@@ -1,5 +1,6 @@
-package io.github.hlg212.task.model.bo;
+package io.github.hlg212.task.xxl.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.github.hlg212.fcf.annotation.Field;
 import lombok.Data;
 
@@ -18,9 +19,11 @@ public class XxlJobInfo {
     private String jobDesc;
 
     @Field(description="新增时间")
-    private Date addTime;
+    private String addTime;
+
     @Field(description="修改时间")
-    private Date updateTime;
+    private String updateTime;
+
     @Field(description="负责人")
     private String author;
     @Field(description = "邮件")
@@ -45,7 +48,8 @@ public class XxlJobInfo {
 
     private String glueRemark;
 
-    private Date glueUpdatetime;
+    private String glueUpdatetime;
+
     @Field(description="子任务id")
     private String childJobId;
     @Field(description="状态")

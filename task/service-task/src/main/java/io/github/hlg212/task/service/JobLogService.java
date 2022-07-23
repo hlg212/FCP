@@ -7,11 +7,11 @@ public interface JobLogService extends CurdServiceImpl<JobLogBo> {
 
     /**
      * 清除
-     * @param zxqid
-     * @param rwid
+     * @param jobGroup
+     * @param jobId
      * @param type
      * @return
      */
-    public String clear(int zxqid, int rwid, int type);
+    public String clear(int jobGroup, int jobId, int type);
 
 }

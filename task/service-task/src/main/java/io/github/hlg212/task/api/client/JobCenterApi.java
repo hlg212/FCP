@@ -1,17 +1,18 @@
 package io.github.hlg212.task.api.client;
 
 import io.github.hlg212.task.api.Constants;
+import io.github.hlg212.task.conf.XxlAuthConfiguration;
+import io.github.hlg212.task.xxl.model.XxlJobInfo;
+import io.github.hlg212.task.xxl.model.XxlPageResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Map;
 
-
-@FeignClient(contextId = "JobCenterApi",name=Constants.APP_APIGATEWAY_XXL, path=Constants.XXL_PATH, url=Constants.AppFeignUrl.XXL_JOB/*, configuration = TaskCenterApi.FormSupportConfig.class*/)
-@RequestMapping(Constants.ApiMapping.INFO)
+@FeignClient(contextId = Constants.ApiContextId.JobCenterApi,name=Constants.ApiName.JobCenterApi, path=Constants.ApiPath.JobCenterApi, url=Constants.ApiUrl.JobCenterApi, configuration = XxlAuthConfiguration.class)
+@RequestMapping(Constants.ApiMapping.JobCenterApi)
 public interface JobCenterApi {
     /**
      * 获取分页列表
@@ -24,12 +25,13 @@ public interface JobCenterApi {
      * @return
      */
     @RequestMapping(value="/pageList", method= RequestMethod.POST)
-    public Map<String, Object> findPage(@RequestParam("start") int start,
-                                        @RequestParam("length") int length,
-                                        @RequestParam("jobGroup") int jobGroup,
-                                        @RequestParam("jobDesc") String jobDesc,
-                                        @RequestParam("executorHandler") String executorHandler,
-                                        @RequestParam("filterTime") String filterTime);
+    public XxlPageResult<XxlJobInfo> findPage(@RequestParam("start") int start,
+                                              @RequestParam("length") int length,
+                                              @RequestParam("jobGroup") int jobGroup,
+                                              @RequestParam("triggerStatus") int triggerStatus,
+                                              @RequestParam("jobDesc") String jobDesc,
+                                              @RequestParam("executorHandler") String executorHandler,
+                                              @RequestParam("filterTime") String filterTime);
 
     /**
      * 新增任务

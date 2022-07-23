@@ -8,10 +8,10 @@ import lombok.Data;
 public class JobInfoQco extends Qco {
 
     @Field( description = "执行器id查询" )
-    private int zxqid;
+    private int jobGroup;
 
     @Field( description = "任务描述查询" )
-    private String rwms;
+    private String jobDesc;
 
     @Field( description = "执行handler" )
     private String handler;
@@ -20,5 +20,5 @@ public class JobInfoQco extends Qco {
     private String filterTime;
 
     @Field( description = "应用编码查询" )
-    private String yybm;
+    private String appCode;
 }

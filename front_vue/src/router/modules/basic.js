@@ -36,6 +36,18 @@ const basicRouter = {
       meta: { title: '机构管理' }
     },
     {
+      path: '/basic/orgType',
+      name: 'orgType',
+      component: () => import('@/views/platform/basic/orgType/index'),
+      meta: { title: '机构类型管理' }
+    },
+    {
+      path: '/basic/orgTree',
+      name: 'orgTree',
+      component: () => import('@/views/platform/basic/orgTree/index'),
+      meta: { title: '机构树管理' }
+    },
+    {
       path: '/basic/res',
       name: 'res',
       component: () => import('@/views/platform/basic/res/index'),

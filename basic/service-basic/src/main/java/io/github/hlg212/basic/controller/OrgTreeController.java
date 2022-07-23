@@ -48,18 +48,18 @@ public class OrgTreeController implements CurdieController<OrgTreeBo, OrgTreeQco
     @RequestMapping(value="/getChildList",method={RequestMethod.POST,RequestMethod.GET})
     public List<OrgTreeBo> getChildList(@RequestParamOrBody OrgTreeParam param)
     {
-       return null;
+       return orgTreeService.getChildList(param);
     }
 
     @ApiOperation("获取机构树子节点，树方式返回")
     @RequestMapping(value="/getChildTree",method={RequestMethod.POST,RequestMethod.GET})
     public List<OrgTreeBo> getChildTree(@RequestParamOrBody OrgTreeParam param)
     {
-        return null;
+        return orgTreeService.getChildTree(param);
     }
 
     @ApiOperation("获取机构父级，集合方式，顶级在第一个位置")
-    @RequestMapping(value="/getChildTree",method={RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value="/getParentList",method={RequestMethod.POST,RequestMethod.GET})
     @ApiImplicitParams({
             @ApiImplicitParam( name = "orgTreeTypeCode", value = "机构树类型编码", required = true),
             @ApiImplicitParam( name = "orgId", value = "机构id", required = true),
@@ -67,11 +67,11 @@ public class OrgTreeController implements CurdieController<OrgTreeBo, OrgTreeQco
     })
     public List<OrgTreeBo> getParentList(@RequestParamOrBody OrgTreeParam param)
     {
-        return null;
+        return orgTreeService.getParentList(param);
     }
 
     @ApiOperation("获取机构父级，树方式，顶级在第一个位置")
-    @RequestMapping(value="/getChildTree",method={RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value="/getParentTree",method={RequestMethod.POST,RequestMethod.GET})
     @ApiImplicitParams({
             @ApiImplicitParam( name = "orgTreeTypeCode", value = "机构树类型编码", required = true),
             @ApiImplicitParam( name = "orgId", value = "机构id", required = true),
@@ -79,7 +79,7 @@ public class OrgTreeController implements CurdieController<OrgTreeBo, OrgTreeQco
     })
     public List<OrgTreeBo> getParentTree(@RequestParamOrBody OrgTreeParam param)
     {
-        return null;
+        return orgTreeService.getParentTree(param);
     }
 
     @ApiOperation("获取机构父级")
@@ -90,7 +90,7 @@ public class OrgTreeController implements CurdieController<OrgTreeBo, OrgTreeQco
     })
     public OrgTreeBo getParent(String orgTreeTypeCode,String orgId)
     {
-        return null;
+        return orgTreeService.getParent(orgTreeTypeCode,orgId);
     }
 
 }

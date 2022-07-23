@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: dam
+#  autoconfigure:
+#    exclude:
+#      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+#      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure

@@ -1,0 +1,17 @@
+htcf:
+  config:
+#    uri: http://localhost:8081/config/svn
+ #   uri: http://localhost:8080/psv/svn
+
+# 监控用的应用信息
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: ${project.description}
+    version: ${project.version}
+    encoding: ${project.build.sourceEncoding}
+    java:
+      version: ${java.version}
+    frame:
+      version: ${htcf-frame.version}

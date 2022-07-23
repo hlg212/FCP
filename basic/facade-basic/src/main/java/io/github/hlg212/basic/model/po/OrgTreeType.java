@@ -32,6 +32,9 @@ public class OrgTreeType extends Model {
 	@Field(description="来源id")
 	private String sourceId;
 
+	@Field(description="树排列类型")
+	private String type;
+
 	@Field(description="备注")
 	private String memo;
 

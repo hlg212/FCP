@@ -34,7 +34,7 @@ public class RoleResController implements CurdieController<RoleResBo, RoleResQco
     private RoleResService roleResService;
 
     @ResponseBody
-    @ApiOperation("获取资源树")
+    @ApiOperation("保存角色资源")
     @RequestMapping(value="/saveRoleRes",method={RequestMethod.POST})
     public void saveRoleRes(@RequestParamOrBody RoleResSaveBo roleResSaveBo){
         roleResService.saveRoleRes(roleResSaveBo.getRoleId(),roleResSaveBo.getResIds(),roleResSaveBo.getDelResIds());

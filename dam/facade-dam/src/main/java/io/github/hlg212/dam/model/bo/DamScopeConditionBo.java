@@ -23,7 +23,6 @@ public class DamScopeConditionBo extends DamScopeCondition implements IDataAutho
 		return getId();
 	}
 
-
 	@Override
 	public IDataAuthorityPropertyConditionValue getValue() {
 		String value = getScopeValue();
@@ -38,8 +37,9 @@ public class DamScopeConditionBo extends DamScopeCondition implements IDataAutho
 
 	@Override
 	public String getType() {
-		return getScopeType();
+		return getValueType();
 	}
+
 
 
 	@Override

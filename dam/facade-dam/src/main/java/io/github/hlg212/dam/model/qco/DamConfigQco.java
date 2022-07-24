@@ -18,6 +18,9 @@ public class DamConfigQco extends Qco {
 	@Field(description="应用编码")
 	private String appCode;
 
+	@Field(description="应用编码")
+	private String appId;
+
 	@Field(description="使用标志")
 	private String isEnabled;
 

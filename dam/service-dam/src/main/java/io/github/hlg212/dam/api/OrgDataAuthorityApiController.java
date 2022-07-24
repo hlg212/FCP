@@ -1,9 +1,12 @@
 package io.github.hlg212.dam.api;
 
-import io.github.hlg212.dam.api.client.ZzjgTreeApi;
+import io.github.hlg212.basic.model.bo.OrgTreeBo;
+import io.github.hlg212.basic.model.bo.OrgTreeParam;
+import io.github.hlg212.dam.api.client.OrgTreeApi;
 import io.github.hlg212.fcf.api.UserApi;
 import io.github.hlg212.fcf.api.dam.OrgDataAuthorityApi;
 import io.github.hlg212.fcf.model.basic.IUser;
+import io.github.hlg212.fcf.util.CollectionHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +27,8 @@ public class OrgDataAuthorityApiController implements OrgDataAuthorityApi {
 
     @Autowired
     private UserApi userApi;
+    @Autowired
+    private OrgTreeApi orgTreeApi;
 
     @ResponseBody
     @ApiOperation("用户某业务下的机构权限范围")
@@ -32,11 +37,11 @@ public class OrgDataAuthorityApiController implements OrgDataAuthorityApi {
     // @Cacheable(key = "#p0")
     @RequestMapping(value="/getAuthoritys", method = {RequestMethod.GET,RequestMethod.POST})
     public List<String> getAuthoritys(String uid, String param) {
-       // List<ZzjgTreeBo> zzjgTreeBoList = null;
+        List<OrgTreeBo> orgTreeBos = null;
         String pid = null;
         if (StringUtils.isNotEmpty(uid)) {
             IUser iuser = userApi.getById(uid);
-            if (iuser != null & StringUtils.isNotEmpty(iuser.getOrgId())) {
+             if (iuser != null & StringUtils.isNotEmpty(iuser.getOrgId())) {
                 pid = iuser.getOrgId();
             }
         }
@@ -45,14 +50,17 @@ public class OrgDataAuthorityApiController implements OrgDataAuthorityApi {
             return null;
         }
         String params[] = param.split("::");
-        String jglx = params[0];
-        String proName = "id";
+        String orgTreeTypeCode = params[0];
+        String proName = "orgId";
         if (params.length > 1) {
             proName = params[1];
         }
         List<String> result = new ArrayList<>();
-        //zzjgTreeBoList = zzjgTreeApi.getChilds(jglx, pid, 99);
-        //CollectionHelper.getPropertyValues(zzjgTreeBoList, proName, result);
+        OrgTreeParam treeParam = new OrgTreeParam();
+        treeParam.setOrgTreeTypeCode(orgTreeTypeCode);
+        treeParam.setOrgId(pid);
+        orgTreeBos = orgTreeApi.getChildList(treeParam);
+        CollectionHelper.getPropertyValues(orgTreeBos, proName, result);
         result.add(pid);
         return result;
     }

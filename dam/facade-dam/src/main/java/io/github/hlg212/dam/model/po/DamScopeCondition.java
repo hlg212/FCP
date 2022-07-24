@@ -19,8 +19,8 @@ public class DamScopeCondition extends BaseModel {
 	private String configId;
 	@Field(description="名称")
 	private String name;
-	@Field(description="编码")
-	private String code;
+	//@Field(description="编码")
+	//private String code;
 
 	@Field(description="条件类型(基础、合并、指定)")
 	private String conditionType;

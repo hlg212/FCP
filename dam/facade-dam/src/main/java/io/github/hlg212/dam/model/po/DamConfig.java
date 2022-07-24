@@ -20,8 +20,7 @@ import java.util.Date;
 public class DamConfig extends BaseModel {
 
 	@Field(description="应用编码")
-	@NotNull
-	private String appCode;
+	private String appId;
 
 	@Field(description="名称")
 	private String name;

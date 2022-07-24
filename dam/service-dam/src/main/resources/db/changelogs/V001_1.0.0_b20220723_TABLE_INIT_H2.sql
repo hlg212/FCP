@@ -7,7 +7,7 @@
 create table T_DAM_CONFIG
 (
     id                   VARCHAR2(32)         not null,
-    app_code             VARCHAR2(32),
+    app_id            VARCHAR2(32),
     name                 VARCHAR2(50),
     code                 VARCHAR2(50),
     is_Apply_Add         CHAR(1),

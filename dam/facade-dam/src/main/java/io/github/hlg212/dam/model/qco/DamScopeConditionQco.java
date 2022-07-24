@@ -28,4 +28,7 @@ public class DamScopeConditionQco extends Qco {
 	@Field(description="操作符(条件)")
 	private String operation;
 
+	@Field(description="编码")
+	private String code;
+
 }

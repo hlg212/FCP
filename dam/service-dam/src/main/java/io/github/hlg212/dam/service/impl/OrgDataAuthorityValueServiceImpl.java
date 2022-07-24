@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service(Constants.Sjqxfwtj.FWLX_YHJG + Constants.DATA_AUTHORITY_VALUE_SERVICE_SUFFIX)
+@Service(Constants.DamScopeCondition.SCOPETYPE_USER_ORG + Constants.DATA_AUTHORITY_VALUE_SERVICE_SUFFIX)
 public class OrgDataAuthorityValueServiceImpl implements DataAuthorityValueService {
 
     @Autowired

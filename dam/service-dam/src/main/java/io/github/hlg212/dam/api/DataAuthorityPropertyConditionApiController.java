@@ -3,16 +3,15 @@ package io.github.hlg212.dam.api;
 import io.github.hlg212.dam.model.bo.DamScopeConditionBo;
 import io.github.hlg212.dam.model.qco.DamScopeConditionQco;
 import io.github.hlg212.dam.service.DamScopeConditionService;
+import io.github.hlg212.dam.service.DataAuthorityPropertyConditionService;
 import io.github.hlg212.fcf.api.dam.DataAuthorityPropertyConditionApi;
 import io.github.hlg212.fcf.model.dam.IDataAuthorityPropertyConditionValue;
+import io.github.hlg212.fcf.util.FworkHelper;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @Api(value = "数据权限条件api控制器", tags = {"数据权限条件api控制器"})
@@ -21,6 +20,8 @@ public class DataAuthorityPropertyConditionApiController implements DataAuthorit
     @Autowired
     private DamScopeConditionService damScopeConditionService;
 
+    @Autowired
+    private DataAuthorityPropertyConditionService dataAuthorityPropertyConditionService;
 
 
     @Override
@@ -36,8 +37,13 @@ public class DataAuthorityPropertyConditionApiController implements DataAuthorit
     }
 
     @Override
-    public <E extends IDataAuthorityPropertyConditionValue> E getValue(String id) {
-        return null;
+    public IDataAuthorityPropertyConditionValue getValue(String id,String optype) {
+        String uid = FworkHelper.getUid();
+        if( Objects.isNull(uid) )
+        {
+            return null;
+        }
+        return dataAuthorityPropertyConditionService.getValue(FworkHelper.getUid(),id,optype);
     }
 
     private List<DamScopeConditionBo> toRepeat(List<DamScopeConditionBo> list)

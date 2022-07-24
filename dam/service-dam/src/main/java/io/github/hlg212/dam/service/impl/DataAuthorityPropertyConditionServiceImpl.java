@@ -1,28 +1,37 @@
 package io.github.hlg212.dam.service.impl;
 
+import io.github.hlg212.dam.model.bo.DamConfigBo;
 import io.github.hlg212.dam.model.bo.DamScopeConditionBo;
+import io.github.hlg212.dam.model.enums.ConditionTypeEnum;
 import io.github.hlg212.dam.model.qco.DamScopeConditionQco;
+import io.github.hlg212.dam.service.DamConfigService;
 import io.github.hlg212.dam.service.DamScopeConditionService;
 import io.github.hlg212.dam.service.DataAuthorityPropertyConditionService;
 import io.github.hlg212.dam.service.DataAuthorityValueService;
 import io.github.hlg212.dam.util.Constants;
 import io.github.hlg212.fcf.model.dam.DataAuthorityPropertyConditionValue;
 import io.github.hlg212.fcf.model.dam.IDataAuthorityPropertyConditionValue;
+import io.github.hlg212.fcf.util.FworkHelper;
+import io.github.hlg212.fcf.util.PermissionHelper;
 import io.github.hlg212.fcf.util.SpringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Service
 public class DataAuthorityPropertyConditionServiceImpl implements DataAuthorityPropertyConditionService {
 
     @Autowired
     private DamScopeConditionService damScopeConditionService;
 
+    @Autowired
+    private DamConfigService damConfigService;
+
     @Override
     public IDataAuthorityPropertyConditionValue getValue(String userId,String id, String optype) {
-        DamScopeConditionBo bo = damScopeConditionService.getById(id);
         List<DamScopeConditionBo> list = getUserOwned(userId,id,optype);
         List valList = new ArrayList();
 
@@ -71,6 +80,7 @@ public class DataAuthorityPropertyConditionServiceImpl implements DataAuthorityP
     private List<DamScopeConditionBo> getUserOwned(String userId,String id, String optype)
     {
         DamScopeConditionBo bo = damScopeConditionService.getById(id);
+        DamConfigBo configBo = damConfigService.getById(bo.getConfigId());
         DamScopeConditionQco qco = new DamScopeConditionQco();
         qco.setConfigId(bo.getConfigId());
         qco.setPropertyName(bo.getPropertyName());
@@ -80,15 +90,15 @@ public class DataAuthorityPropertyConditionServiceImpl implements DataAuthorityP
         List<DamScopeConditionBo> list =  damScopeConditionService.find(qco);
         List<DamScopeConditionBo> result = new ArrayList<>();
         boolean flag = true;
-        List<DamScopeConditionBo> relist = getUserOwned(userId,optype,list);
+        List<DamScopeConditionBo> relist = getUserOwned(configBo.getAppId(),userId,optype,list);
         List<DamScopeConditionBo> jcresult  = new ArrayList<>();
         for( DamScopeConditionBo b : relist )
         {
-            if( Constants.Sjqxfwtj.TJLX_KZ.equals(b.getConditionType()) )
+            if(ConditionTypeEnum.EXTEND.getValue().equals(b.getConditionType()) )
             {
                 result.add(b);
             }
-            else if( Constants.Sjqxfwtj.TJLX_ZD.equals(b.getConditionType()) )
+            else if( ConditionTypeEnum.ONLY.getValue().equals(b.getConditionType()) )
             {
                 result.add(b);
                 flag = false;
@@ -98,13 +108,13 @@ public class DataAuthorityPropertyConditionServiceImpl implements DataAuthorityP
                 jcresult.add(b);
             }
         }
-        if( !flag )
+        if( flag )
         {
             result.addAll(jcresult);
         }
         return result;
     }
-    private List<DamScopeConditionBo> getUserOwned(String userId,String optype, List <DamScopeConditionBo> list)
+    private List<DamScopeConditionBo> getUserOwned(String appCode,String userId,String optype, List <DamScopeConditionBo> list)
     {
         List <DamScopeConditionBo> relist = new ArrayList<>();
         for( DamScopeConditionBo b : list )
@@ -115,7 +125,8 @@ public class DataAuthorityPropertyConditionServiceImpl implements DataAuthorityP
                     || (optype.equals(io.github.hlg212.fcf.Constants.DataOperation.DELETE) && b.getIsDelete()))
             {
 
-                if( Constants.Sjqxfwtj.TJLX_JC.equals(b.getConditionType()) || checkAuthoriity(b.getCode()) )
+                if( ConditionTypeEnum.SYS.getValue().equals(b.getConditionType())
+                        || checkAuthoriity(appCode,userId,b.getCode()) )
                 {
                     relist.add(b);
                 }
@@ -128,8 +139,8 @@ public class DataAuthorityPropertyConditionServiceImpl implements DataAuthorityP
         }
         return relist;
     }
-    private boolean checkAuthoriity(String authority) {
-        return false;
+    private boolean checkAuthoriity(String appCode,String userId,String authority) {
+        return PermissionHelper.checkPermission(appCode, userId,authority);
     }
 
 

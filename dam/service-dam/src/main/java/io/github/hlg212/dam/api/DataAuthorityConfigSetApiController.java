@@ -21,7 +21,7 @@ public class DataAuthorityConfigSetApiController implements DataAuthorityConfigS
     public List getDataAuthorityConfigSetByCode(String code) {
         DamConfigQco qco = new DamConfigQco();
         qco.setIsEnabled(Constants.BOOLEAN_Y);
-        qco.setAppCode(code);
+        qco.setAppId(code);
         return damConfigService.find(qco);
     }
 }

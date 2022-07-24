@@ -303,7 +303,6 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
           save(this.temp).then((res) => {
             this.temp = res.data
             this.list.unshift(this.temp)

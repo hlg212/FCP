@@ -2,12 +2,12 @@
   <el-container>
     <el-aside width="220px" >
       <el-input placeholder="输入关键字进行过滤" v-model="filterText" />
-      <el-tree  ref="tree"  highlight-current :data="orgTypes" :props="orgTreeTypeProps" @node-click="handleNodeClick"/>
+      <el-tree  ref="tree"  highlight-current :data="damConfigs" :props="orgTreeTypeProps" @node-click="handleNodeClick"/>
     </el-aside>
     <el-main>
   <div class="app-container">
     <div slot="header" class="clearfix">
-          <span>机构树管理</span>
+          <span>数据权限范围条件管理</span>
           <el-divider></el-divider>
     </div>
     <div class="filter-container">
@@ -17,7 +17,7 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate()">
         Add
       </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleEdit()" >
@@ -42,47 +42,52 @@
       highlight-current-row
       style="width: 100%;"
       @sort-change="sortChange"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <el-table-column label="名称" prop="name" sortable  >
         <template slot-scope="{row}">
-          <span>{{ row.org.name }}</span>
+          <span>{{ row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="编码" prop="code" sortable align="center" width="120" >
         <template slot-scope="{row}">
-          <span>{{ row.org.code }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="简称" prop="type" align="center" width="80" >
-        <template slot-scope="{row}">
-          <span>{{ row.org.shortName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="扩展字段1" prop="url" align="center" width="120" >
-        <template slot-scope="{row}">
-          <span>{{ row.org.ext1 }}</span>
+          <span>{{ row.code }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="扩展字段2" prop="url" align="center" width="120" >
+      <el-table-column label="属性名" prop="code" sortable align="center" width="120" >
         <template slot-scope="{row}">
-          <span>{{ row.org.ext2 }}</span>
+          <span>{{ row.propertyName}}</span>
+        </template>
+      </el-table-column>      
+
+      <el-table-column label="条件类型" prop="conditionType" sortable align="center" width="120" >
+        <template slot-scope="{row}">
+          <span>{{ row.conditionType }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="扩展字段3" prop="url" align="center" width="120" >
+      <el-table-column label="操作符" prop="operation" sortable align="center" width="120" >
         <template slot-scope="{row}">
-          <span>{{ row.org.ext3 }}</span>
+          <span>{{ row.operation }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="值类型" prop="valueType" sortable align="center" width="120" >
+        <template slot-scope="{row}">
+          <span>{{ row.valueType }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="权限应用"  align="center" width="160" >
+        <template slot-scope="{row}">
+          <el-tag :key="tag" v-for="tag in row.applyTags">{{ tag }}</el-tag>
+
         </template>
       </el-table-column>
 
       <el-table-column label="Actions" align="center" width="320" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-           <el-button type="primary" size="mini" @click="handleCreate(row)">
-            Add 
-          </el-button>
-          <el-button type="primary" size="mini" @click="handleEdit()">
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
           <el-button  size="mini" @click="handleView(row)">
@@ -98,26 +103,96 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
 
 
- <el-dialog title="机构树编辑" :visible.sync="dialogEditTreeVisible">
-            <el-tree
-              ref="orgTree"
-              :data="orgTreeData"
-              show-checkbox
-               default-expand-all
-               draggable
-              node-key="orgId"
-              :props="defaultProps">
-            </el-tree>
+<el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="90px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="名称" prop="name">
+          <el-input :disabled='temp.disabled' v-model="temp.name" placeholder="输入名称" />
+        </el-form-item>
+        <el-form-item label="编码" prop="code">
+          <el-input :disabled='temp.disabled' v-model="temp.code" placeholder="请输入编码" />
+        </el-form-item>
+        <el-form-item label="属性名" prop="propertyName">
+          <el-input :disabled='temp.disabled' v-model="temp.propertyName" placeholder="请输入属性名" />
+        </el-form-item>
+                <el-form-item label="条件类型" prop="conditionType">
+          <el-select :disabled='temp.disabled' v-model="temp.conditionType" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in conditionTypeOptions" :key="item.value" :label="item.name" :value="item.value" />
+          </el-select>
+        </el-form-item>
+                <el-form-item label="操作符" prop="operation">
+          <el-input :disabled='temp.disabled' v-model="temp.operation" placeholder="请输入操作符" />
+        </el-form-item>
+                <el-form-item label="值类型" prop="valueType">
+                    <el-select :disabled='temp.disabled' v-model="temp.valueType" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in valueTypeOptions" :key="item.value" :label="item.name" :value="item.value" />
+          </el-select>
+        </el-form-item>
+                <el-form-item label="范围参数编码" prop="paramCode">
+          <el-input :disabled='temp.disabled' v-model="temp.paramCode" placeholder="请输入范围参数编码" />
+        </el-form-item>
 
-       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogEditTreeVisible = false">
+        <el-form-item label="范围类型" prop="scopeType">
+          <el-input :disabled='temp.disabled' v-model="temp.scopeType" placeholder="请输入范围类型" />
+        </el-form-item>
+                <el-form-item label="范围值" prop="scopeValue">
+          <el-input :disabled='temp.disabled' v-model="temp.scopeValue" placeholder="请输入范围值" />
+        </el-form-item>
+
+
+      <el-form-item label="应用到查询" >
+        <el-switch
+            :disabled='temp.disabled'
+            active-value="Y"
+            inactive-value="N"
+            v-model="temp.isApplyQuery">
+          </el-switch>
+      </el-form-item>
+            <el-form-item label="应用到新增" >
+        <el-switch
+            :disabled='temp.disabled'
+            active-value="Y"
+            inactive-value="N"
+            v-model="temp.isApplyAdd">
+          </el-switch>
+      </el-form-item>
+            <el-form-item label="应用到修改" >
+        <el-switch
+            :disabled='temp.disabled'
+            active-value="Y"
+            inactive-value="N"
+            v-model="temp.isApplyUpdate">
+          </el-switch>
+      </el-form-item>
+            <el-form-item label="应用到删除" >
+        <el-switch
+            :disabled='temp.disabled'
+            active-value="Y"
+            inactive-value="N"
+            v-model="temp.isApplyDelete">
+          </el-switch>
+      </el-form-item>
+
+        <el-form-item label="备注" prop="memo">
+          <el-input :disabled='temp.disabled' :rows="3" type="textarea" v-model="temp.memo" placeholder="写点什么吧" />
+        </el-form-item>
+
+        <el-form-item label="创建时间" v-if="dialogStatus !== 'create'" prop="createTime">
+          <el-input :disabled='temp.disabled' v-model="temp.createTime" />
+        </el-form-item>
+        <el-form-item label="创建人" v-if="dialogStatus !== 'create'" prop="createUser">
+          <el-input :disabled='temp.disabled' v-model="temp.createUser" />
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
           取消
         </el-button>
-        <el-button  type="primary" @click="handleSaveTree">
+        <el-button v-if="dialogStatus !== 'view'" type="primary" @click="dialogStatus==='create'?createData():updateData()">
           保存
         </el-button>
       </div>
-     </el-dialog>
+    </el-dialog>
 
     <el-dialog :visible.sync="uploadShow" title="导入">
       <el-upload
@@ -150,33 +225,36 @@
 
 <script>
 import DictHelper from '@/utils/dict'
-import { findOrgTreeType,findTree, save, exportPage,importSave } from '@/api/basic/orgTree'
+import { findConfig,findPage, save,update, exportPage,importSave } from '@/api/dam/damScopeCondition'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
+const valueTypeOptions = DictHelper.getDicts("dam","VALUE_TYPE");
+const valueTypeKeyValue = DictHelper.getDictsMap("dam","VALUE_TYPE");
+
+const conditionTypeOptions = DictHelper.getDicts("dam","CONDITION_TYPE");
+const conditionTypeKeyValue = DictHelper.getDictsMap("dam","CONDITION_TYPE");
 
 export default {
-  name: 'BasicOrgTree',
+  name: 'DamScopeCondition',
   components: { Pagination  },
   directives: { waves },
   filters: {
-    typeFilter(key)
+    valueTypeFilter(key)
     {
-        return typeKeyValue[key]
+        return valueTypeKeyValue[key]
+    },
+    conditionTypeFilter(key)
+    {
+        return conditionTypeKeyValue[key]
     }
   },
   data() {
     return {
-      orgTypes:[],
-      orgTreeData:[],
-      dialogEditTreeVisible:false,
-      rowOrgType:null,
-      defaultProps: {
-        key: 'orgId',
-        children: 'children',
-        label: 'name'
-      },
+      valueTypeOptions,
+      conditionTypeOptions,
+      damConfigs:[],
       orgTreeTypeProps: {
         label: 'name'
       },
@@ -194,7 +272,7 @@ export default {
         qco: {
           nameLike: undefined,
           urlLike: undefined,
-          orgTypeId: undefined
+          configId: undefined
         },
         sort: '+name'
       },
@@ -202,9 +280,8 @@ export default {
       temp: {
         id: undefined,
         name: '',
-        parentResId: undefined,
         memo: undefined,
-        appId: undefined,
+        configId: undefined,
         sortNum:100
       },
       dialogFormVisible: false,
@@ -216,7 +293,6 @@ export default {
       },
       rules: {
         name: [{ required: true, message: 'type is required', trigger: 'change' }],
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
         code: [{ required: true, message: 'title is required', trigger: 'blur' }]
       },
       
@@ -224,26 +300,47 @@ export default {
     }
   },
   created() {
-    this.getOrgTreeTypeList()
+    this.getConfigList()
   },
   methods: {
-    getOrgTreeTypeList(){
-       findOrgTreeType({}).then(response => {
-         this.orgTypes = response.data
+    getConfigList(){
+       findConfig({}).then(response => {
+         this.damConfigs = response.data
        })
     },
     // 查询获取数据方法
     getList() {
       this.listLoading = true
-      findTree(this.listQuery.qco).then(response => {
+      findPage(this.listQuery).then(response => {
         if( response.data )
         {
-          this.list = response.data;
-          this.total = response.data.length;
+          this.list = response.data.list;
+          this.total = response.data.total;
         }
         else{
           this.list = [];
           this.total = 0;
+        }
+        for(let d of this.list )
+        {
+          var applyTags = []
+          d["applyTags"] = applyTags;
+          if( d.isApplyQuery === 'Y')
+          {
+              applyTags.push("查询");
+          } 
+          if( d.isApplyAdd === 'Y')
+          {
+            applyTags.push("新增");
+          }
+          if( d.isApplyUpdate === 'Y')
+          {
+            applyTags.push("修改");
+          }
+          if( d.isApplyDelete === 'Y')
+          {
+            applyTags.push("删除");
+          }
         }
 
         this.listLoading = false
@@ -275,13 +372,14 @@ export default {
         parentResId: undefined
       }
     },
-    handleCreate(row) {
-      this.$notify({
-              title: 'Success',
-              message: 'Created Successfully',
-              type: 'success',
-              duration: 2000
-        })
+    handleCreate() {
+      this.resetTemp()
+      this.temp.configId = this.listQuery.qco.configId;
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
     },
     createData() {
       this.$refs['dataForm'].validate((valid) => {
@@ -430,53 +528,9 @@ export default {
             });
     },
     handleNodeClick(data) {
-        this.rowOrgType = data;
-        this.listQuery.qco.orgTypeId = data.id;
+        this.listQuery.qco.configId = data.id;
         this.getList();
-      },
-    handleSaveTree(){
-        var orgTrees = [];
-        var saveData = {"orgTypeId":this.rowOrgType.id,"orgTrees":orgTrees};
-        orgTrees = this.$refs["orgTree"].getCheckedNodes();
-        
-        saveTree(saveData).then(response =>{
-              this.$notify({
-                title: 'Success',
-                message: 'saveOrgTree Successfully',
-                type: 'success',
-                duration: 2000
-              })
-        })
-    },
-    handleEdit() {
-      debugger
-      this.dialogEditTreeVisible = true;
-      this.listLoading = true;
-      var qco = {"orgTreeTypeId":this.rowOrgType.id};
-      var pqco = {"orgTreeTypeId":this.rowOrgType.sourceId};
-      if( this.rowOrgType.sourceId )
-      {
-        findTree(pqco).then(pres => {
-          this.orgTreeData = pres.data;
-          findTree(qco).then(response => {
-            var list = response.data;
-              debugger
-              for(var bo of list)
-              {
-                  this.$refs["orgTree"].setChecked(bo.orgId,true,false);
-              }     
-
-            this.listLoading = true;
-          });
-        });
       }
-      else{
-        findTree(qco).then(pres => {
-          this.orgTreeData = pres.data;
-        });
-      }
-
-    }
   }
 }
 </script>

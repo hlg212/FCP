@@ -5,7 +5,7 @@ var serviceUrl = "/basic/";
 var moduleUrl ={
   loadDicts: serviceUrl + "api/dict/getAllDicts"
 }
-const appCodes = ["basic","system","admin"];
+const appCodes = ["basic","system","admin","dam"];
 const dictKeyPrefix = "dictKey_";
 
 const DictHelper = {

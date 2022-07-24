@@ -1,7 +1,7 @@
 package io.github.hlg212.basic.util;
 
-import io.github.hlg212.basic.model.enmu.ResCategoryEnum;
-import io.github.hlg212.basic.model.enmu.ResTypeEnum;
+import io.github.hlg212.basic.model.enums.ResCategoryEnum;
+import io.github.hlg212.basic.model.enums.ResTypeEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;

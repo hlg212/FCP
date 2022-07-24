@@ -22,7 +22,7 @@
                  JOIN T_APP_ROLE T2 ON T1.ID = T2.role_id
                  JOIN T_ROLE_RES T3 ON T1.ID = T3.role_id
                  JOIN T_RES T4 ON T4.ID = T3.res_id
-        WHERE AND T4.permission_code is not null
+        WHERE T4.permission_code is not null
         <if test="userId != null and userId != ''">
           AND T.user_id = #{userId}
         </if>

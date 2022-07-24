@@ -23,4 +23,21 @@ spring:
 fcf:
   esb:
     enable: false
+#  mvc:
+#    cors:
+#      enable: true
+  cache:
+    enable: false
 ---
+fcf:
+  dao:
+    authority:
+      enable: true
+      damEnable: true
+---
+fcf:
+  feign:
+    DictApi:
+      url: http://localhost:8096
+    AppApi:
+      url: http://localhost:8096

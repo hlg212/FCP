@@ -140,7 +140,7 @@ public class OrgTreeServiceImpl implements OrgTreeService {
         OrgTreeQco qco = new OrgTreeQco();
         qco.setOrgTreeTypeId(param.getOrgTreeTypeCode());
         qco.setTreeLevelLtEq(depth);
-        qco.setLocationCodeRlike(currOrg.getLocationCode() + Constants.OrgType.LOCATIONCODE_SPLIT);
+        qco.setLocationCodeRtLike(currOrg.getLocationCode() + Constants.OrgType.LOCATIONCODE_SPLIT);
 
         List<OrgTreeBo> orgTreeBos = find(qco);
         if( BooleanHelper.to(param.getIsSelf()) )
@@ -180,7 +180,7 @@ public class OrgTreeServiceImpl implements OrgTreeService {
 
         OrgTreeQco qco = new OrgTreeQco();
         qco.setOrgTreeTypeId(param.getOrgTreeTypeCode());
-        qco.setLocationCodeRlike(locationCode + Constants.OrgType.LOCATIONCODE_SPLIT );
+        qco.setLocationCodeRtLike(locationCode + Constants.OrgType.LOCATIONCODE_SPLIT );
         // 大于等于深度级别
         // 当前树的等级为 5, 上两级的数据就是 >=3;
         // 最终获得是是 3,4 级的数据；
@@ -207,7 +207,7 @@ public class OrgTreeServiceImpl implements OrgTreeService {
     @Override
     public List<OrgTreeBo> getParentTree(OrgTreeParam param) {
         List<OrgTreeBo> list = getChildList(param);
-        return TreeHelper.buildTree(list);
+        return TreeHelper.buildTree(list,"orgId","pid","children");
     }
 
     @Override

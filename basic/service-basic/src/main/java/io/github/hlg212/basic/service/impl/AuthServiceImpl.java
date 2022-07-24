@@ -2,7 +2,7 @@ package io.github.hlg212.basic.service.impl;
 
 import io.github.hlg212.basic.model.bo.AppBo;
 import io.github.hlg212.basic.model.bo.ResBo;
-import io.github.hlg212.basic.model.enmu.RoleTypeEnum;
+import io.github.hlg212.basic.model.enums.RoleTypeEnum;
 import io.github.hlg212.basic.model.qco.AppQco;
 import io.github.hlg212.basic.model.qco.ResQco;
 import io.github.hlg212.basic.service.*;

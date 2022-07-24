@@ -29,7 +29,7 @@ public class OrgTreeQco extends Qco {
 	private String codeLike;
 
 	@Field(description="定位码右匹配")
-	private String locationCodeRlike;
+	private String locationCodeRtLike;
 
 	@Field(description="级别等于")
 	private Integer treeLevel;

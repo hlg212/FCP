@@ -2,8 +2,8 @@ package io.github.hlg212.basic.service.impl;
 
 import io.github.hlg212.basic.dao.UserRoleDao;
 import io.github.hlg212.basic.model.bo.*;
-import io.github.hlg212.basic.model.enmu.ResCategoryEnum;
-import io.github.hlg212.basic.model.enmu.ResTypeEnum;
+import io.github.hlg212.basic.model.enums.ResCategoryEnum;
+import io.github.hlg212.basic.model.enums.ResTypeEnum;
 import io.github.hlg212.basic.model.qco.ClientRoleQco;
 import io.github.hlg212.basic.model.qco.RoleQco;
 import io.github.hlg212.basic.model.qco.RoleResQco;

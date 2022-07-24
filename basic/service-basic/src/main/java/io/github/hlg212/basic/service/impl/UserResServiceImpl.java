@@ -3,12 +3,10 @@ package io.github.hlg212.basic.service.impl;
 import io.github.hlg212.basic.dao.UserResDao;
 import io.github.hlg212.basic.model.bo.AppBo;
 import io.github.hlg212.basic.model.bo.ResBo;
-import io.github.hlg212.basic.model.enmu.ResTypeEnum;
 import io.github.hlg212.basic.model.qco.ResQco;
 import io.github.hlg212.basic.service.*;
 import io.github.hlg212.fcf.util.TreeHelper;
 import lombok.AllArgsConstructor;
-import org.apache.commons.codec.net.QCodec;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

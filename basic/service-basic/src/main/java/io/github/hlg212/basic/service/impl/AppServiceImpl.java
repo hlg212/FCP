@@ -20,4 +20,10 @@ public class AppServiceImpl implements AppService{
         qco.setCode(code);
         return get(qco);
     }
+
+    @Override
+    public AppBo save(AppBo appBo) {
+        appBo.setId(appBo.getCode());
+        return AppService.super.save(appBo);
+    }
 }

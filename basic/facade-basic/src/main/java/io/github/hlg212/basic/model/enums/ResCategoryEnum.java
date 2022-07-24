@@ -1,5 +1,6 @@
-package io.github.hlg212.basic.model.enmu;
+package io.github.hlg212.basic.model.enums;
 
+import io.github.hlg212.fcf.model.BaseEnum;
 import lombok.Getter;
 
 /**
